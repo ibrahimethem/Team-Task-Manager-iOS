@@ -13,7 +13,7 @@ import FirebaseFirestoreSwift
 class ProfileViewController: UITableViewController, UserManagerDelegate {
     
     var db: Firestore = Firestore.firestore()
-    var userModel: UserModel?
+    //var userModel: UserModel?
     var userManager: UserManager?
     
     var userModelSnapshot: ListenerRegistration?
@@ -60,7 +60,6 @@ class ProfileViewController: UITableViewController, UserManagerDelegate {
 
 extension ProfileViewController {
     func didFetchUser(_ userManager: UserManager, user: UserModel) {
-        userModel = user
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
@@ -84,14 +83,14 @@ extension ProfileViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        guard userModel != nil else {
+        guard userManager?.userModel != nil else {
             return 0
         }
         return sectionNumbers.total.rawValue
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let usrMdl = userModel else {
+        guard let usrMdl = userManager?.userModel else {
             return 0
         }
         switch section {
@@ -113,7 +112,7 @@ extension ProfileViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let usrMdl = userModel else {
+        guard let usrMdl = userManager?.userModel else {
             navigationController?.popViewController(animated: true)
             return UITableViewCell()
         }
