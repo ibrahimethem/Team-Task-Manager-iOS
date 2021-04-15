@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="editProfileCell" rowHeight="58" id="KGk-i7-Jjw" customClass="EditProfileCell" customModule="Team_Task_Manager" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="327" height="58"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="327" height="58"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NHb-yv-csH">
+                        <rect key="frame" x="15" y="5" width="302" height="48"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yTk-uA-haU">
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="9ZS-Vn-dVd"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Add your name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2QJ-au-YL5">
+                                <rect key="frame" x="100" y="0.0" width="202" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="height" priority="999" constant="44" id="H5p-Aa-bGw"/>
+                        </constraints>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="NHb-yv-csH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="XkE-SW-aHS"/>
+                    <constraint firstAttribute="trailing" secondItem="NHb-yv-csH" secondAttribute="trailing" constant="10" id="Yed-hz-mDb"/>
+                    <constraint firstAttribute="bottom" secondItem="NHb-yv-csH" secondAttribute="bottom" constant="5" id="f9h-AM-eV9"/>
+                    <constraint firstItem="NHb-yv-csH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="s7b-MA-IYh"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <inset key="separatorInset" minX="115" minY="0.0" maxX="0.0" maxY="0.0"/>
+            <connections>
+                <outlet property="infoTextField" destination="2QJ-au-YL5" id="YHK-XF-XTi"/>
+                <outlet property="titleLabel" destination="yTk-uA-haU" id="ZQd-qx-3Ah"/>
+            </connections>
+            <point key="canvasLocation" x="129.71014492753625" y="115.84821428571428"/>
+        </tableViewCell>
+    </objects>
+</document>
