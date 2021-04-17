@@ -51,7 +51,7 @@
                 <outlet property="infoTextView" destination="wbX-nE-j8i" id="cii-rU-0pM"/>
                 <outlet property="titleLabel" destination="Npv-J2-OEl" id="F8m-Xz-tSH"/>
             </connections>
-            <point key="canvasLocation" x="-130.43478260869566" y="102.12053571428571"/>
+            <point key="canvasLocation" x="-175" y="97"/>
         </tableViewCell>
     </objects>
     <resources>

@@ -25,7 +25,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="noZ-QL-Ay0"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -33,6 +33,9 @@
                                 <rect key="frame" x="100" y="0.0" width="275" height="50"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="infoDidChange:" destination="KGk-i7-Jjw" eventType="editingChanged" id="VTz-Np-Zv8"/>
+                                </connections>
                             </textField>
                         </subviews>
                         <constraints>

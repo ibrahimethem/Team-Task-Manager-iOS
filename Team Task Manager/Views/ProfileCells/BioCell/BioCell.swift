@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BioCell: UITableViewCell {
+class BioCell: ProfileCell, UITextViewDelegate {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var infoTextView: UITextView!
@@ -19,26 +19,24 @@ class BioCell: UITableViewCell {
         infoTextView.textContainerInset = UIEdgeInsets(top: 18, left: 0, bottom: 18, right: 5)
         infoTextView.textContainer.lineFragmentPadding = 0.0
         
-        //infoTextView.centerVerticalText()
+        infoTextView.delegate = self
         
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
-}
-
-extension UITextView {
-
-    func centerVerticalText() {
-        self.textAlignment = .center
-        let fitSize = CGSize(width: bounds.width, height: CGFloat.greatestFiniteMagnitude)
-        let size = sizeThatFits(fitSize)
-        let calculate = (bounds.size.height - size.height * zoomScale) / 2
-        let offset = max(1, calculate)
-        contentOffset.y = -offset
+    private var initialText: String?
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        initialText = textView.text
     }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if initialText != textView.text {
+            delegate?.infoDidChange(self as ProfileCell, info: textView.text)
+        }
+    }
+    
 }

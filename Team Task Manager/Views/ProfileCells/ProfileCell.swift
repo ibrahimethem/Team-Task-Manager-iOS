@@ -1,17 +1,18 @@
 //
-//  EditProfileCell.swift
+//  ProfileCell.swift
 //  Team Task Manager
 //
-//  Created by İbrahim Ethem Karalı on 25.03.2021.
+//  Created by İbrahim Ethem Karalı on 17.04.2021.
 //
 
 import UIKit
 
-class EditProfileCell: UITableViewCell {
+class ProfileCell: UITableViewCell {
 
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var infoTextField: UITextField!
-    
+    /// row number of the cell
+    var index: Int?
+    var key: UserModel.codingKeys?
+    var delegate: ProfileCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,5 +24,9 @@ class EditProfileCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
+}
+
+protocol ProfileCellDelegate {
+    func infoDidChange(_ cell: ProfileCell, info: String)
 }
