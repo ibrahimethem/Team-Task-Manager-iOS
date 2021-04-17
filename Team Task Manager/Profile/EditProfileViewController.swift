@@ -213,4 +213,25 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
         }
     }
     
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        switch indexPath.section {
+        case sectionNumbers.otherMails.rawValue:
+            let action = UITableViewRowAction(style: .default, title: "remove") { (action, thisIndexPath) in
+                self.userManager?.removeMail(index: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+            
+            return [action]
+        case sectionNumbers.phoneNumbers.rawValue:
+            let action = UITableViewRowAction(style: .default, title: "remove") { (action, thisIndexPath) in
+                self.userManager?.removePhoneNumber(index: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+            
+            return [action]
+        default:
+            return nil
+        }
+    }
+    
 }

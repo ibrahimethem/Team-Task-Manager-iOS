@@ -20,7 +20,6 @@ class BioCell: ProfileCell, UITextViewDelegate {
         infoTextView.textContainer.lineFragmentPadding = 0.0
         
         infoTextView.delegate = self
-        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

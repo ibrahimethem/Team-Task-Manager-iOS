@@ -57,6 +57,10 @@ class UserManager {
         userModel?.otherEmails?[index] = mail
     }
     
+    func removeMail(index: Int) {
+        userModel?.otherEmails?.remove(at: index)
+    }
+    
     func addNewPhoneNumber(phoneNumber: String) {
         if userModel?.phoneNumbers == nil {
             userModel?.phoneNumbers = [phoneNumber]
@@ -67,6 +71,10 @@ class UserManager {
     
     func changePhoneNumber(phoneNumber: String, index: Int) {
         userModel?.phoneNumbers?[index] = phoneNumber
+    }
+    
+    func removePhoneNumber(index: Int) {
+        userModel?.phoneNumbers?.remove(at: index)
     }
     
     // Update database
