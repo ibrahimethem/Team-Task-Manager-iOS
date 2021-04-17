@@ -168,7 +168,7 @@ extension ProfileViewController {
             return cell
             
         default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "logoutCell", for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "logoutCell", for: indexPath) as! LogoutCell
             
             return cell
         }

@@ -18,10 +18,18 @@ struct UserModel: Codable, Identifiable {
     var bio: String?
     var phoneNumbers: [String]?
     
+    enum codingKeys: String, CodingKey {
+        case userID
+        case profileName
+        case email
+        case otherEmails
+        case bio
+        case phoneNumbers
+    }
     
     var dict: [String:Any] {
         var temp: [String: Any] = ["userID": userID!, "profileName": profileName!, "email": email!]
-        if otherEmails != nil { temp["emails"] = otherEmails! }
+        if otherEmails != nil { temp["otherEmails"] = otherEmails! }
         if bio != nil { temp["bio"] = bio! }
         if phoneNumbers != nil { temp["phoneNumbers"] = phoneNumbers! }
         

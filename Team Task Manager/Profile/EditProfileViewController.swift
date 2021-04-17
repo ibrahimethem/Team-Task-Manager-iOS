@@ -14,7 +14,7 @@ class EditProfileViewController: UIViewController {
     var userModel: UserModel?
     var userManager: UserManager? {
         didSet {
-            self.userModel = userManager?.userModel
+            userModel = userManager?.userModel
         }
     }
     
@@ -30,20 +30,49 @@ class EditProfileViewController: UIViewController {
         
         editTableView.translatesAutoresizingMaskIntoConstraints = false
         
-    }
-    
-    @IBAction func done(_ sender: UIBarButtonItem) {
+        editTableView.isEditing = true
         
     }
     
+    @IBAction func done(_ sender: UIBarButtonItem) {
+        dismiss(animated: true) {
+            DispatchQueue.main.async {
+                self.userManager?.updateUser()
+            }
+        }
+    }
+    
     @IBAction func cancel(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
+        
+        dismiss(animated: true, completion: {
+            self.userManager?.userModel = self.userModel
+        })
     }
     
     
 }
 
-extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource {
+extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource, ProfileCellDelegate {
+
+    func infoDidChange(_ cell: ProfileCell, info: String) {
+        switch cell.key {
+        case .profileName:
+            userManager?.userModel?.profileName = info
+        case .bio:
+            userManager?.userModel?.bio = info
+        case .otherEmails:
+            if let i = cell.index {
+                userManager?.changeMail(mail: info, index: i)
+            }
+        case .phoneNumbers:
+            if let i = cell.index {
+                userManager?.changePhoneNumber(phoneNumber: info, index: i)
+            }
+        default:
+            print(info)
+        }
+        print(userManager?.userModel?.dict ?? "")
+    }
     
     enum sectionNumbers: Int {
         case profileName = 0
@@ -56,14 +85,14 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        guard userModel != nil else {
+        guard userManager?.userModel != nil else {
             return 0
         }
         return sectionNumbers.total.rawValue
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let usrMdl = userModel else {
+        guard let usrMdl = userManager?.userModel else {
             return 0
         }
         switch section {
@@ -83,7 +112,7 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let usrMdl = userModel else {
+        guard let usrMdl = userManager?.userModel else {
             return UITableViewCell()
         }
         
@@ -91,10 +120,9 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource 
         case sectionNumbers.profileName.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: "profileInfoCell", for: indexPath) as! ProfileInfoCell
             
-            cell.titleLabel.text = "Profile Name:"
             cell.info.text = usrMdl.profileName
-            cell.info.placeholder = "Add your profile name"
-            cell.info.textContentType = .name
+            cell.key = UserModel.codingKeys.profileName
+            cell.delegate = self
             
             return cell
         
@@ -104,17 +132,16 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource 
             cell.titleLabel.text = "Bio:"
             cell.infoTextView.text = usrMdl.bio ?? ""
             cell.infoTextView.isEditable = true
+            cell.delegate = self
             
             return cell
         
         case sectionNumbers.email.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: "profileInfoCell", for: indexPath) as! ProfileInfoCell
             
-            cell.titleLabel.text = "Email:"
             cell.info.text = usrMdl.email
-            cell.info.placeholder = "Add your email"
-            cell.info.keyboardType = .emailAddress
-            cell.info.textContentType = .emailAddress
+            cell.key = UserModel.codingKeys.email
+            //cell.delegate = self
             
             return cell
             
@@ -122,16 +149,16 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource 
             if (usrMdl.otherEmails?.count ?? 0) == indexPath.row {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "addMoreCell", for: indexPath)
                 cell.textLabel?.text = "Add another email"
+                
                 return cell
             }
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "profileInfoCell", for: indexPath) as! ProfileInfoCell
             
-            cell.titleLabel.text = "Other emails:"
             cell.info.text = usrMdl.otherEmails?[indexPath.row]
-            cell.info.placeholder = "Enter your email"
-            cell.info.keyboardType = .emailAddress
-            cell.info.textContentType = .emailAddress
+            cell.key = UserModel.codingKeys.otherEmails
+            cell.delegate = self
+            cell.index = indexPath.row
             
             return cell
             
@@ -139,15 +166,15 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource 
             if (usrMdl.phoneNumbers?.count ?? 0) == indexPath.row {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "addMoreCell", for: indexPath)
                 cell.textLabel?.text = "Add another phone number"
+                
                 return cell
             }
             let cell = tableView.dequeueReusableCell(withIdentifier: "profileInfoCell", for: indexPath) as! ProfileInfoCell
             
-            cell.titleLabel.text = "Phone #:"
             cell.info.text = usrMdl.phoneNumbers?[indexPath.row]
-            cell.info.placeholder = "Add your phone number"
-            cell.info.keyboardType = .phonePad
-            cell.info.textContentType = .telephoneNumber
+            cell.key = UserModel.codingKeys.phoneNumbers
+            cell.delegate = self
+            cell.index = indexPath.row
             
             return cell
         default:
@@ -157,6 +184,33 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 1
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView.cellForRow(at: indexPath)?.reuseIdentifier == "addMoreCell" {
+            if indexPath.section == sectionNumbers.otherMails.rawValue {
+                userManager?.addNewMail(mail: "")
+                tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
+                tableView.reloadData()
+            } else if indexPath.section == sectionNumbers.phoneNumbers.rawValue {
+                userManager?.addNewPhoneNumber(phoneNumber: "")
+                tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
+                tableView.reloadData()
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        switch indexPath.section {
+        case sectionNumbers.otherMails.rawValue:
+            if userManager?.userModel?.otherEmails?.count == indexPath.row { return false }
+            return true
+        case sectionNumbers.phoneNumbers.rawValue:
+            if userManager?.userModel?.phoneNumbers?.count == indexPath.row { return false }
+            return true
+        default:
+            return false
+        }
     }
     
 }

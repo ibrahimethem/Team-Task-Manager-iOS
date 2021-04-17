@@ -45,10 +45,34 @@ class UserManager {
         }
     }
     
+    func addNewMail(mail: String) {
+        if userModel?.otherEmails == nil {
+            userModel?.otherEmails = [mail]
+        } else {
+            userModel?.otherEmails?.append(mail)
+        }
+    }
+    
+    func changeMail(mail: String, index: Int) {
+        userModel?.otherEmails?[index] = mail
+    }
+    
+    func addNewPhoneNumber(phoneNumber: String) {
+        if userModel?.phoneNumbers == nil {
+            userModel?.phoneNumbers = [phoneNumber]
+        } else {
+            userModel?.phoneNumbers?.append(phoneNumber)
+        }
+    }
+    
+    func changePhoneNumber(phoneNumber: String, index: Int) {
+        userModel?.phoneNumbers?[index] = phoneNumber
+    }
+    
     // Update database
-    func updateUser(user: UserModel) {
-        guard user.userID != nil else { return }
-        db.collection("userProfileInfo").document(user.userID!).setData(user.dict) { (err) in
+    func updateUser() {
+        guard userModel?.userID != nil else { return }
+        db.collection("userProfileInfo").document(userModel!.userID!).setData(userModel!.dict) { (err) in
             if err != nil {
                 print(err?.localizedDescription ?? "can't print the error")
             }
