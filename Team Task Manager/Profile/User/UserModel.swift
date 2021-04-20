@@ -14,9 +14,9 @@ struct UserModel: Codable, Identifiable {
     var userID: String!
     var profileName: String!
     var email: String!
-    var otherEmails: [String]?
+    var otherEmails: [MailModel]?
     var bio: String?
-    var phoneNumbers: [String]?
+    var phoneNumbers: [PhoneNumberModel]?
     
     enum codingKeys: String, CodingKey {
         case userID
@@ -29,9 +29,11 @@ struct UserModel: Codable, Identifiable {
     
     var dict: [String:Any] {
         var temp: [String: Any] = ["userID": userID!, "profileName": profileName!, "email": email!]
-        if otherEmails != nil { temp["otherEmails"] = otherEmails! }
+        if otherEmails != nil { temp["otherEmails"] = otherMailsAsArray }
         if bio != nil { temp["bio"] = bio! }
-        if phoneNumbers != nil { temp["phoneNumbers"] = phoneNumbers! }
+        if phoneNumbers != nil { temp["phoneNumbers"] = phoneNumbersAsArray
+            
+        }
         
         return temp
     }
@@ -41,5 +43,43 @@ struct UserModel: Codable, Identifiable {
         if bio != nil { dic["bio"] = bio! }
         
         return dic
+    }
+    
+    private var otherMailsAsArray: [[String:Any]] {
+        var temp: [[String:Any]] = []
+        for mail in otherEmails ?? [] {
+            temp.append(mail.dict)
+        }
+        return temp
+    }
+    
+    private var phoneNumbersAsArray: [[String:Any]] {
+        var temp: [[String:Any]] = []
+        for number in phoneNumbers ?? [] {
+            temp.append(number.dict)
+        }
+        
+        return temp
+    }
+    
+}
+
+struct MailModel: Codable {
+    
+    var title: String?
+    var email: String?
+    
+    var dict: [String: Any] {
+        return ["title": title ?? "Other", "email": email ?? "Other"]
+    }
+}
+
+struct PhoneNumberModel: Codable {
+    
+    var title: String?
+    var phoneNumber: String?
+    
+    var dict: [String: Any] {
+        return ["title": title ?? "Other", "phoneNumber": phoneNumber ?? "Other"]
     }
 }

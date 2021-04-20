@@ -18,10 +18,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BCR-vY-KEW">
-                        <rect key="frame" x="15" y="5" width="375" height="50"/>
+                        <rect key="frame" x="15" y="5" width="375" height="40"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ehk-xa-ktD">
-                                <rect key="frame" x="0.0" y="0.0" width="100" height="50"/>
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="noZ-QL-Ay0"/>
                                 </constraints>
@@ -30,7 +30,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter your profile name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NBo-iw-YHw">
-                                <rect key="frame" x="100" y="0.0" width="275" height="50"/>
+                                <rect key="frame" x="100" y="0.0" width="275" height="40"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
@@ -44,10 +44,10 @@
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="BCR-vY-KEW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="7eK-AH-ndb"/>
-                    <constraint firstAttribute="bottom" secondItem="BCR-vY-KEW" secondAttribute="bottom" constant="5" id="EUt-tK-9qo"/>
-                    <constraint firstAttribute="trailing" secondItem="BCR-vY-KEW" secondAttribute="trailing" constant="10" id="z6i-dm-v40"/>
-                    <constraint firstItem="BCR-vY-KEW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="zRP-eb-lcC"/>
+                    <constraint firstItem="BCR-vY-KEW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" priority="998" constant="5" id="7eK-AH-ndb"/>
+                    <constraint firstAttribute="bottom" secondItem="BCR-vY-KEW" secondAttribute="bottom" priority="997" constant="5" id="EUt-tK-9qo"/>
+                    <constraint firstAttribute="trailing" secondItem="BCR-vY-KEW" secondAttribute="trailing" priority="990" constant="10" id="z6i-dm-v40"/>
+                    <constraint firstItem="BCR-vY-KEW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" priority="992" constant="15" id="zRP-eb-lcC"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

@@ -15,6 +15,7 @@ class UserManager {
     var db: Firestore {
         let settings = FirestoreSettings()
         let tempDB = Firestore.firestore()
+        //settings.isPersistenceEnabled = false
         tempDB.settings = settings
         
         return tempDB
@@ -45,7 +46,7 @@ class UserManager {
         }
     }
     
-    func addNewMail(mail: String) {
+    func addNewMail(mail: MailModel) {
         if userModel?.otherEmails == nil {
             userModel?.otherEmails = [mail]
         } else {
@@ -54,14 +55,18 @@ class UserManager {
     }
     
     func changeMail(mail: String, index: Int) {
-        userModel?.otherEmails?[index] = mail
+        userModel?.otherEmails?[index].email = mail
+    }
+    
+    func changeMailTitle(title: String, index: Int) {
+        userModel?.otherEmails?[index].title = title
     }
     
     func removeMail(index: Int) {
         userModel?.otherEmails?.remove(at: index)
     }
     
-    func addNewPhoneNumber(phoneNumber: String) {
+    func addNewPhoneNumber(phoneNumber: PhoneNumberModel) {
         if userModel?.phoneNumbers == nil {
             userModel?.phoneNumbers = [phoneNumber]
         } else {
@@ -70,7 +75,11 @@ class UserManager {
     }
     
     func changePhoneNumber(phoneNumber: String, index: Int) {
-        userModel?.phoneNumbers?[index] = phoneNumber
+        userModel?.phoneNumbers?[index].phoneNumber = phoneNumber
+    }
+    
+    func changePhoneNumberTitle(title: String, index: Int) {
+        userModel?.phoneNumbers?[index].title = title
     }
     
     func removePhoneNumber(index: Int) {

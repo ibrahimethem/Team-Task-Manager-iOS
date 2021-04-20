@@ -26,6 +26,7 @@ class EditProfileViewController: UIViewController {
         
         editTableView.register(UINib(nibName: "ProfileInfoCell", bundle: nil), forCellReuseIdentifier: "profileInfoCell")
         editTableView.register(UINib(nibName: "BioCell", bundle: nil), forCellReuseIdentifier: "bioCell")
+        editTableView.register(UINib(nibName: "OtherInfoCell", bundle: nil), forCellReuseIdentifier: "otherInfoCell")
         editTableView.register(UITableViewCell.self, forCellReuseIdentifier: "addMoreCell")
         
         editTableView.translatesAutoresizingMaskIntoConstraints = false
@@ -52,7 +53,10 @@ class EditProfileViewController: UIViewController {
     
 }
 
-extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource, ProfileCellDelegate {
+// MARK: - TableView Delegate functions
+
+
+extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource, ProfileCellDelegate, OtherInfoCellDelegate {
 
     func infoDidChange(_ cell: ProfileCell, info: String) {
         switch cell.key {
@@ -62,16 +66,37 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
             userManager?.userModel?.bio = info
         case .otherEmails:
             if let i = cell.index {
-                userManager?.changeMail(mail: info, index: i)
+                userManager?.userModel?.otherEmails?[i].email = info
+                //userManager?.changeMail(mail: info, index: i)
             }
         case .phoneNumbers:
             if let i = cell.index {
-                userManager?.changePhoneNumber(phoneNumber: info, index: i)
+                userManager?.userModel?.phoneNumbers?[i].phoneNumber = info
+                //userManager?.changePhoneNumber(phoneNumber: info, index: i)
             }
         default:
             print(info)
         }
         print(userManager?.userModel?.dict ?? "")
+    }
+    
+    func titleButtonPressed(_ cell: OtherInfoCell, index: Int) {
+        let alert = UIAlertController(title: "Select Title", message: nil, preferredStyle: .alert)
+        alert.addTextField { (textField) in
+            textField.placeholder = "Enter title"
+        }
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (alertAction) in
+            guard let textField = alert.textFields?[0] else { return }
+            if cell.key == UserModel.codingKeys.otherEmails {
+                self.userManager?.userModel?.otherEmails?[index].title = textField.text
+            } else if cell.key == UserModel.codingKeys.phoneNumbers {
+                self.userManager?.userModel?.phoneNumbers?[index].title = textField.text
+            }
+            cell.titleButton.setTitle(textField.text, for: .normal)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
     }
     
     enum sectionNumbers: Int {
@@ -153,11 +178,13 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
                 return cell
             }
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: "profileInfoCell", for: indexPath) as! ProfileInfoCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "otherInfoCell", for: indexPath) as! OtherInfoCell
             
-            cell.info.text = usrMdl.otherEmails?[indexPath.row]
+            cell.info.text = usrMdl.otherEmails?[indexPath.row].email
+            cell.titleButton.setTitle(usrMdl.otherEmails?[indexPath.row].title, for: .normal)
             cell.key = UserModel.codingKeys.otherEmails
             cell.delegate = self
+            cell.otherInfoCellDelegate = self
             cell.index = indexPath.row
             
             return cell
@@ -169,33 +196,58 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
                 
                 return cell
             }
-            let cell = tableView.dequeueReusableCell(withIdentifier: "profileInfoCell", for: indexPath) as! ProfileInfoCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "otherInfoCell", for: indexPath) as! OtherInfoCell
             
-            cell.info.text = usrMdl.phoneNumbers?[indexPath.row]
+            cell.info.text = usrMdl.phoneNumbers?[indexPath.row].phoneNumber
+            cell.titleButton.setTitle(usrMdl.phoneNumbers?[indexPath.row].title, for: .normal)
             cell.key = UserModel.codingKeys.phoneNumbers
             cell.delegate = self
+            cell.otherInfoCellDelegate = self
             cell.index = indexPath.row
             
             return cell
+        
         default:
             return UITableViewCell()
         }
     }
     
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 1
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch section {
+        case sectionNumbers.profileName.rawValue:
+            return 0
+        case sectionNumbers.otherMails.rawValue:
+            return 30
+        case sectionNumbers.phoneNumbers.rawValue:
+            return 30
+        default:
+            return 15
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case sectionNumbers.otherMails.rawValue:
+            return "Alternative emails"
+        case sectionNumbers.phoneNumbers.rawValue:
+            return "Phone numbers"
+        default:
+            return nil
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView.cellForRow(at: indexPath)?.reuseIdentifier == "addMoreCell" {
             if indexPath.section == sectionNumbers.otherMails.rawValue {
-                userManager?.addNewMail(mail: "")
-                tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
-                tableView.reloadData()
+                userManager?.addNewMail(mail: MailModel())
+                tableView.beginUpdates()
+                tableView.insertRows(at: [indexPath], with: .automatic)
+                tableView.endUpdates()
             } else if indexPath.section == sectionNumbers.phoneNumbers.rawValue {
-                userManager?.addNewPhoneNumber(phoneNumber: "")
-                tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
-                tableView.reloadData()
+                userManager?.addNewPhoneNumber(phoneNumber: PhoneNumberModel())
+                tableView.beginUpdates()
+                tableView.insertRows(at: [indexPath], with: .automatic)
+                tableView.endUpdates()
             }
         }
     }
@@ -203,10 +255,12 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         switch indexPath.section {
         case sectionNumbers.otherMails.rawValue:
-            if userManager?.userModel?.otherEmails?.count == indexPath.row { return false }
+            let count = userManager?.userModel?.otherEmails?.count
+            if count == indexPath.row || count == 0 || count == nil { return false }
             return true
         case sectionNumbers.phoneNumbers.rawValue:
-            if userManager?.userModel?.phoneNumbers?.count == indexPath.row { return false }
+            let count = userManager?.userModel?.phoneNumbers?.count
+            if count == indexPath.row || count == 0 || count == nil { return false }
             return true
         default:
             return false
@@ -217,15 +271,21 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
         switch indexPath.section {
         case sectionNumbers.otherMails.rawValue:
             let action = UITableViewRowAction(style: .default, title: "remove") { (action, thisIndexPath) in
+                self.view.endEditing(true)
                 self.userManager?.removeMail(index: indexPath.row)
+                tableView.beginUpdates()
                 tableView.deleteRows(at: [indexPath], with: .automatic)
+                tableView.endUpdates()
             }
             
             return [action]
         case sectionNumbers.phoneNumbers.rawValue:
             let action = UITableViewRowAction(style: .default, title: "remove") { (action, thisIndexPath) in
+                self.view.endEditing(true)
                 self.userManager?.removePhoneNumber(index: indexPath.row)
+                tableView.beginUpdates()
                 tableView.deleteRows(at: [indexPath], with: .automatic)
+                tableView.endUpdates()
             }
             
             return [action]

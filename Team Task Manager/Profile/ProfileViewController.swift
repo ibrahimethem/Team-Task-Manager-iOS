@@ -12,7 +12,14 @@ import FirebaseFirestoreSwift
 
 class ProfileViewController: UITableViewController, UserManagerDelegate {
     
-    var db: Firestore = Firestore.firestore()
+    var db: Firestore {
+        let settings = FirestoreSettings()
+        let tempDB = Firestore.firestore()
+        //settings.isPersistenceEnabled = false
+        tempDB.settings = settings
+        
+        return tempDB
+    }
     //var userModel: UserModel?
     var userManager: UserManager?
     
@@ -150,8 +157,8 @@ extension ProfileViewController {
         case sectionNumbers.otherMails.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: "profileInfoCell", for: indexPath) as! ProfileInfoCell
             
-            cell.titleLabel.text = "Other emails:"
-            cell.info.text = usrMdl.otherEmails?[indexPath.row]
+            cell.titleLabel.text = "\(usrMdl.otherEmails?[indexPath.row].title ?? "nil"):"
+            cell.info.text = usrMdl.otherEmails?[indexPath.row].email
             cell.info.placeholder = "Enter your email"
             cell.info.isUserInteractionEnabled = false
             
@@ -160,29 +167,41 @@ extension ProfileViewController {
         case sectionNumbers.phoneNumbers.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: "profileInfoCell", for: indexPath) as! ProfileInfoCell
             
-            cell.titleLabel.text = "Phone #:"
-            cell.info.text = usrMdl.phoneNumbers?[indexPath.row]
+            cell.titleLabel.text = "\(usrMdl.phoneNumbers?[indexPath.row].title ?? ""):"
+            cell.info.text = usrMdl.phoneNumbers?[indexPath.row].phoneNumber
             cell.info.placeholder = "Enter your phone number"
             cell.info.isUserInteractionEnabled = false
             
             return cell
             
         default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "logoutCell", for: indexPath) as! LogoutCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "logoutCell", for: indexPath)
             
             return cell
         }
     
     }
     
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 1
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch section {
+        case sectionNumbers.profileName.rawValue:
+            return 0
+        case sectionNumbers.otherMails.rawValue:
+            return 30
+        case sectionNumbers.phoneNumbers.rawValue:
+            return 30
+        default:
+            return 15
+        }
     }
     
-    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if tableView.numberOfRows(inSection: section) == 0 || section == 5 {
-            return UIView()
-        } else {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case sectionNumbers.otherMails.rawValue:
+            return "Alternative emails"
+        case sectionNumbers.phoneNumbers.rawValue:
+            return "Phone numbers"
+        default:
             return nil
         }
     }
