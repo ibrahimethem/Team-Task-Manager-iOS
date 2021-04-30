@@ -12,6 +12,8 @@ import FirebaseFirestoreSwift
 
 class UserManager {
     
+    static var shared = UserManager()
+    
     var db: Firestore {
         let settings = FirestoreSettings()
         let tempDB = Firestore.firestore()
@@ -37,7 +39,6 @@ class UserManager {
             if let documentChanges = querySnapshot?.documentChanges {
                 if let myUser = try! documentChanges[0].document.data(as: UserModel.self) {
                     self.userModel = myUser
-                    print(self.userModel?.dict as Any)
                     DispatchQueue.main.async {
                         self.delegate?.didFetchUser(self, user: self.userModel!)
                     }

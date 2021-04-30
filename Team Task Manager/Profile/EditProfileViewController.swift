@@ -67,12 +67,10 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
         case .otherEmails:
             if let i = cell.index {
                 userManager?.userModel?.otherEmails?[i].email = info
-                //userManager?.changeMail(mail: info, index: i)
             }
         case .phoneNumbers:
             if let i = cell.index {
                 userManager?.userModel?.phoneNumbers?[i].phoneNumber = info
-                //userManager?.changePhoneNumber(phoneNumber: info, index: i)
             }
         default:
             print(info)
@@ -85,7 +83,7 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
         alert.addTextField { (textField) in
             textField.placeholder = "Enter title"
         }
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (alertAction) in
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [unowned self] (alertAction) in
             guard let textField = alert.textFields?[0] else { return }
             if cell.key == UserModel.codingKeys.otherEmails {
                 self.userManager?.userModel?.otherEmails?[index].title = textField.text
@@ -158,6 +156,7 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
             cell.infoTextView.text = usrMdl.bio ?? ""
             cell.infoTextView.isEditable = true
             cell.delegate = self
+            cell.key = .bio
             
             return cell
         
@@ -270,7 +269,7 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         switch indexPath.section {
         case sectionNumbers.otherMails.rawValue:
-            let action = UITableViewRowAction(style: .default, title: "remove") { (action, thisIndexPath) in
+            let action = UITableViewRowAction(style: .default, title: "remove") { [unowned self] (action, thisIndexPath) in
                 self.view.endEditing(true)
                 self.userManager?.removeMail(index: indexPath.row)
                 tableView.beginUpdates()
@@ -280,7 +279,7 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
             
             return [action]
         case sectionNumbers.phoneNumbers.rawValue:
-            let action = UITableViewRowAction(style: .default, title: "remove") { (action, thisIndexPath) in
+            let action = UITableViewRowAction(style: .default, title: "remove") { [unowned self] (action, thisIndexPath) in
                 self.view.endEditing(true)
                 self.userManager?.removePhoneNumber(index: indexPath.row)
                 tableView.beginUpdates()

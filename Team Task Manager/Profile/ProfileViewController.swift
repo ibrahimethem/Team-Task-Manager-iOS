@@ -12,6 +12,11 @@ import FirebaseFirestoreSwift
 
 class ProfileViewController: UITableViewController, UserManagerDelegate {
     
+    deinit {
+        //print("Profile View Controller succesfully deinitialized")
+        userManager?.userModelSnapshot?.remove()
+    }
+    
     var db: Firestore {
         let settings = FirestoreSettings()
         let tempDB = Firestore.firestore()
@@ -20,10 +25,8 @@ class ProfileViewController: UITableViewController, UserManagerDelegate {
         
         return tempDB
     }
-    //var userModel: UserModel?
-    var userManager: UserManager?
     
-    var userModelSnapshot: ListenerRegistration?
+    var userManager: UserManager?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,14 +37,13 @@ class ProfileViewController: UITableViewController, UserManagerDelegate {
         tableView.register(UINib(nibName: "BioCell", bundle: nil), forCellReuseIdentifier: "bioCell")
         
         // User Manager
-        userManager = UserManager()
-        userManager?.delegate = self
-        userManager?.setListener()
-        
+        UserManager.shared.delegate = self
+        UserManager.shared.setListener()
+        userManager = UserManager.shared
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        userManager?.userModelSnapshot?.remove()
+        //userManager?.userModelSnapshot?.remove()
     }
     
     @IBAction func edit(_ sender: UIBarButtonItem) {
