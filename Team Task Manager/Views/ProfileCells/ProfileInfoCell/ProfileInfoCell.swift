@@ -20,7 +20,7 @@ class ProfileInfoCell: ProfileCell, UITextFieldDelegate {
         didSet {
             switch key {
             case .profileName:
-                titleLabel.text = "Profile Name:"
+                titleLabel.text = "Name:"
                 info.placeholder = "Add your profile name"
                 info.textContentType = .name
             case .email:

@@ -31,6 +31,8 @@ class ProfileViewController: UITableViewController, UserManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.title = "Profile"
+        
         view.translatesAutoresizingMaskIntoConstraints = false
         
         tableView.register(UINib(nibName: "ProfileInfoCell", bundle: nil), forCellReuseIdentifier: "profileInfoCell")
@@ -41,10 +43,7 @@ class ProfileViewController: UITableViewController, UserManagerDelegate {
         UserManager.shared.setListener()
         userManager = UserManager.shared
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        //userManager?.userModelSnapshot?.remove()
-    }
+
     
     @IBAction func edit(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: "editProfileSegue", sender: userManager)
@@ -88,7 +87,7 @@ extension ProfileViewController {
         case otherMails = 3
         case phoneNumbers = 4
         // default case is LOGOUT
-        case total = 6
+        case total = 5
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -130,7 +129,7 @@ extension ProfileViewController {
         case sectionNumbers.profileName.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: "profileInfoCell", for: indexPath) as! ProfileInfoCell
             
-            cell.titleLabel.text = "Profile Name:"
+            cell.titleLabel.text = "Name:"
             cell.info.text = usrMdl.profileName
             cell.info.placeholder = "Enter your profile name"
             cell.info.isUserInteractionEnabled = false
@@ -142,7 +141,7 @@ extension ProfileViewController {
             
             cell.titleLabel.text = "Bio:"
             cell.infoTextView.text = usrMdl.bio
-            cell.infoTextView.isEditable = false
+            cell.infoTextView.isUserInteractionEnabled = false
             
             return cell
             
@@ -177,7 +176,7 @@ extension ProfileViewController {
             return cell
             
         default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "logoutCell", for: indexPath)
+            let cell = UITableViewCell()
             
             return cell
         }
@@ -187,13 +186,13 @@ extension ProfileViewController {
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
         case sectionNumbers.profileName.rawValue:
-            return 0
+            return 20
         case sectionNumbers.otherMails.rawValue:
             return 30
         case sectionNumbers.phoneNumbers.rawValue:
             return 30
         default:
-            return 15
+            return 0
         }
     }
     
@@ -208,16 +207,4 @@ extension ProfileViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView.cellForRow(at: indexPath)?.reuseIdentifier == "logoutCell" {
-            let alertView = UIAlertController(title: "Logout", message: "You are logging out. Do you want to continue?", preferredStyle: .alert)
-            alertView.addAction(UIAlertAction(title: "Yes, continue", style: .destructive, handler: { (alertAction) in
-                try? Auth.auth().signOut()
-            }))
-            alertView.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in
-                alertView.dismiss(animated: true, completion: nil)
-            }))
-            self.present(alertView, animated: true, completion: nil)
-        }
-    }
 }
