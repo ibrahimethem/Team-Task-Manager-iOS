@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SideMenu
 import FirebaseAuth
 
 struct HomeViewModel {
@@ -14,9 +13,9 @@ struct HomeViewModel {
     var userInfo: UserModel?
 }
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TeamManagerDelegate {
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, HomeManagerDelegate {
 
-    lazy var teamManager = TeamManager()
+    lazy var teamManager = HomeManager()
     lazy var viewModel = HomeViewModel()
     
     @IBOutlet weak var tableView: UITableView!
@@ -33,24 +32,24 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     }
     
-    func didLoadTeams(_ teamManager: TeamManager, teams: [TeamModel]) {
+    func didLoadTeams(_ teamManager: HomeManager, teams: [TeamModel]) {
         viewModel.teams = teams
         tableView.reloadData()
     }
     
-    func didModifyTeam(_ teamManager: TeamManager, team: TeamModel) {
+    func didModifyTeam(_ teamManager: HomeManager, team: TeamModel) {
         print(team)
     }
     
-    func didAddTeam(_ teamManager: TeamManager, team: TeamModel) {
+    func didAddTeam(_ teamManager: HomeManager, team: TeamModel) {
         print(team)
     }
     
-    func didRemoveTeam(_ teamManager: TeamManager, team: TeamModel) {
+    func didRemoveTeam(_ teamManager: HomeManager, team: TeamModel) {
         print(team)
     }
     
-    func didFailLoadTeams(_ teamManager: TeamManager, with error: Error) {
+    func didFailLoadTeams(_ teamManager: HomeManager, with error: Error) {
         print(error)
     }
     

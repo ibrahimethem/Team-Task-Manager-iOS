@@ -10,10 +10,10 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import FirebaseAuth
 
-class TeamManager {
+class HomeManager {
     
     var teams: [TeamModel]?
-    var delegate: TeamManagerDelegate?
+    var delegate: HomeManagerDelegate?
     
     var db: Firestore {
         let settings = FirestoreSettings()
@@ -72,10 +72,10 @@ class TeamManager {
     
 }
 
-protocol TeamManagerDelegate {
-    func didLoadTeams(_ teamManager: TeamManager, teams: [TeamModel])
-    func didModifyTeam(_ teamManager: TeamManager, team: TeamModel)
-    func didAddTeam(_ teamManager: TeamManager, team: TeamModel)
-    func didRemoveTeam(_ teamManager: TeamManager, team: TeamModel)
-    func didFailLoadTeams(_ teamManager: TeamManager, with error: Error)
+protocol HomeManagerDelegate {
+    func didLoadTeams(_ teamManager: HomeManager, teams: [TeamModel])
+    func didModifyTeam(_ teamManager: HomeManager, team: TeamModel)
+    func didAddTeam(_ teamManager: HomeManager, team: TeamModel)
+    func didRemoveTeam(_ teamManager: HomeManager, team: TeamModel)
+    func didFailLoadTeams(_ teamManager: HomeManager, with error: Error)
 }

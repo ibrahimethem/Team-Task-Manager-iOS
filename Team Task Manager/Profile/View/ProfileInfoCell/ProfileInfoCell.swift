@@ -34,7 +34,7 @@ class ProfileInfoCell: ProfileCell, UITextFieldDelegate {
             case .phoneNumbers:
                 titleLabel.text = "Phone #:"
                 info.placeholder = "Add your phone number"
-                info.keyboardType = .phonePad
+                //info.keyboardType = .
                 info.textContentType = .telephoneNumber
             default:
                 print("\(self) key set: \(key?.rawValue ?? "")")

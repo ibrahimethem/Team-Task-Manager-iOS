@@ -24,7 +24,7 @@ class OtherInfoCell: ProfileCell, UITextFieldDelegate {
             case .phoneNumbers:
                 titleButton.titleLabel?.text = "Phone #:"
                 info.placeholder = "Add your phone number"
-                info.keyboardType = .phonePad
+                info.keyboardType = .numbersAndPunctuation
                 info.textContentType = .telephoneNumber
             default:
                 print(key?.rawValue ?? "")
