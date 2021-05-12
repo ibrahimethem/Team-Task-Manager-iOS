@@ -13,9 +13,6 @@ import FirebaseAuth
 class TeamManager {
     
     var teams: [TeamModel]?
-    
-    var user: UserModel?
-    
     var delegate: TeamManagerDelegate?
     
     var db: Firestore {
@@ -73,28 +70,6 @@ class TeamManager {
         }
     }
     
-    
-    func getUserInfo() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        
-        db.collection("userProfileInfo").whereField("userID", isEqualTo: uid).addSnapshotListener { [unowned self] querySnapshot, error in
-            if let err = error {
-                delegate?.didFailLoadTeams(self, with: err)
-                return
-            }
-            if let usr: UserModel = mapDocuments(querySnapshot: querySnapshot)?.first {
-                user = usr
-                delegate?.didLoadUser(self, user: usr)
-            }
-            
-        }
-    }
-    
-    func loadViewModel() {
-        getUserInfo()
-        addSnapshotListener()
-    }
-    
 }
 
 protocol TeamManagerDelegate {
@@ -103,6 +78,4 @@ protocol TeamManagerDelegate {
     func didAddTeam(_ teamManager: TeamManager, team: TeamModel)
     func didRemoveTeam(_ teamManager: TeamManager, team: TeamModel)
     func didFailLoadTeams(_ teamManager: TeamManager, with error: Error)
-    func didLoadUser(_ teamManager: TeamManager, user: UserModel)
-    func didLoadViewModel(_ teamManager: TeamManager)
 }

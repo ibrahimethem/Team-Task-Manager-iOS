@@ -10,7 +10,7 @@ target 'Team Task Manager' do
   pod 'Firebase/Firestore'
   pod 'FirebaseFirestoreSwift'
   pod 'SideMenu'
-  # pod 'IQKeyboardManagerSwift'
+  pod 'IQKeyboardManagerSwift'
 
   post_install do |installer|
   installer.pods_project.targets.each do |target|

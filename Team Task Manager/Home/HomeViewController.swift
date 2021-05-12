@@ -24,8 +24,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         teamManager.delegate = self
-        //teamManager.addSnapshotListener()
-        teamManager.loadViewModel()
+        teamManager.addSnapshotListener()
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -53,17 +52,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func didFailLoadTeams(_ teamManager: TeamManager, with error: Error) {
         print(error)
-    }
-    
-    func didLoadUser(_ teamManager: TeamManager, user: UserModel) {
-        //viewModel.userInfo = user
-        //tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
-    }
-    
-    func didLoadViewModel(_ teamManager: TeamManager) {
-        viewModel.teams = teamManager.teams
-        viewModel.userInfo = teamManager.user
-        tableView.reloadData()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
