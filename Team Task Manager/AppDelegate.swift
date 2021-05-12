@@ -8,7 +8,7 @@
 import UIKit
 import Firebase
 import FirebaseFirestore
-import IQKeyboardManagerSwift
+//import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,8 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        IQKeyboardManager.shared.enable = true
-        IQKeyboardManager.shared.enableAutoToolbar = false
+        //IQKeyboardManager.shared.enable = true
+        //IQKeyboardManager.shared.enableAutoToolbar = false
         
         FirebaseApp.configure()
         
@@ -32,16 +32,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        }
         
         Auth.auth().addStateDidChangeListener { (auth, user) in
-            print("something changed")
             if user != nil {
-                print("user is not nil")
                 let mainStoryBoard = UIStoryboard.init(name: "Home", bundle: nil)
-                
                 self.window?.rootViewController = mainStoryBoard.instantiateInitialViewController()
             } else {
-                print("user is nil")
                 let loginRegisterStoryBoard = UIStoryboard.init(name: "Login", bundle: nil)
-                
                 self.window?.rootViewController = loginRegisterStoryBoard.instantiateInitialViewController()
             }
         }
