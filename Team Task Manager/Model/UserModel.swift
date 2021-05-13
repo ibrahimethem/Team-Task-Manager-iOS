@@ -27,40 +27,40 @@ struct UserModel: Codable, Identifiable {
         case phoneNumbers
     }
     
-    var dict: [String:Any] {
-        var temp: [String: Any] = ["userID": userID!, "profileName": profileName!, "email": email!]
-        if otherEmails != nil { temp["otherEmails"] = otherMailsAsArray }
-        if bio != nil { temp["bio"] = bio! }
-        if phoneNumbers != nil { temp["phoneNumbers"] = phoneNumbersAsArray
-            
-        }
-        
-        return temp
-    }
-    
-    func asDictionary() -> [String: Any] {
-        var dic = ["userID": userID ?? "","profileName": profileName ?? "", "email": email ?? ""]
-        if bio != nil { dic["bio"] = bio! }
-        
-        return dic
-    }
-    
-    private var otherMailsAsArray: [[String:Any]] {
-        var temp: [[String:Any]] = []
-        for mail in otherEmails ?? [] {
-            temp.append(mail.dict)
-        }
-        return temp
-    }
-    
-    private var phoneNumbersAsArray: [[String:Any]] {
-        var temp: [[String:Any]] = []
-        for number in phoneNumbers ?? [] {
-            temp.append(number.dict)
-        }
-        
-        return temp
-    }
+//    var dict: [String:Any] {
+//        var temp: [String: Any] = ["userID": userID!, "profileName": profileName!, "email": email!]
+//        if otherEmails != nil { temp["otherEmails"] = otherMailsAsArray }
+//        if bio != nil { temp["bio"] = bio! }
+//        if phoneNumbers != nil { temp["phoneNumbers"] = phoneNumbersAsArray
+//
+//        }
+//
+//        return temp
+//    }
+//
+//    func asDictionary() -> [String: Any] {
+//        var dic = ["userID": userID ?? "","profileName": profileName ?? "", "email": email ?? ""]
+//        if bio != nil { dic["bio"] = bio! }
+//
+//        return dic
+//    }
+//
+//    private var otherMailsAsArray: [[String:Any]] {
+//        var temp: [[String:Any]] = []
+//        for mail in otherEmails ?? [] {
+//            temp.append(mail.dict)
+//        }
+//        return temp
+//    }
+//
+//    private var phoneNumbersAsArray: [[String:Any]] {
+//        var temp: [[String:Any]] = []
+//        for number in phoneNumbers ?? [] {
+//            temp.append(number.dict)
+//        }
+//
+//        return temp
+//    }
     
 }
 
@@ -69,9 +69,9 @@ struct MailModel: Codable {
     var title: String?
     var email: String?
     
-    var dict: [String: Any] {
-        return ["title": title ?? "Other", "email": email ?? "Other"]
-    }
+//    var dict: [String: Any] {
+//        return ["title": title ?? "Other", "email": email ?? "Other"]
+//    }
 }
 
 struct PhoneNumberModel: Codable {
@@ -79,7 +79,7 @@ struct PhoneNumberModel: Codable {
     var title: String?
     var phoneNumber: String?
     
-    var dict: [String: Any] {
-        return ["title": title ?? "Other", "phoneNumber": phoneNumber ?? "Other"]
-    }
+//    var dict: [String: Any] {
+//        return ["title": title ?? "Other", "phoneNumber": phoneNumber ?? "Other"]
+//    }
 }

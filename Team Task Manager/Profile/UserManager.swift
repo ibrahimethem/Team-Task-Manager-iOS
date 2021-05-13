@@ -90,10 +90,10 @@ class UserManager {
     // Update database
     func updateUser() {
         guard userModel?.userID != nil else { return }
-        db.collection("userProfileInfo").document(userModel!.userID!).setData(userModel!.dict) { (err) in
-            if err != nil {
-                print(err?.localizedDescription ?? "can't print the error")
-            }
+        do {
+            try db.collection("userProfileInfo").document(userModel!.userID!).setData(from: userModel)
+        } catch {
+            print(error)
         }
     }
     

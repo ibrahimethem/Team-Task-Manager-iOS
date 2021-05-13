@@ -75,7 +75,6 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
         default:
             print(info)
         }
-        print(userManager?.userModel?.dict ?? "")
     }
     
     func titleButtonPressed(_ cell: OtherInfoCell, index: Int) {
