@@ -67,10 +67,10 @@ class LoginViewController: UIViewController, UITextViewDelegate {
     }
     
     private func updateProfileInfo(user: UserModel) {
-        db.collection("userProfileInfo").document(user.userID).setData(user.asDictionary()) { (err) in
-            if let error = err {
-                print(error.localizedDescription)
-            }
+        do {
+            try db.collection("userProfileInfo").document(user.userID).setData(from: user)
+        } catch {
+            print(error)
         }
     }
     
