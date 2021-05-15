@@ -10,7 +10,7 @@ import FirebaseAuth
 
 class AccountViewController: UITableViewController, UserManagerDelegate {
     
-    var userManager = UserManager()
+    lazy var userManager = UserManager()
     
     struct ViewModel {
         var user: UserModel?
@@ -27,7 +27,7 @@ class AccountViewController: UITableViewController, UserManagerDelegate {
     
     func didFetchUser(_ userManager: UserManager, user: UserModel) {
         viewModel.user = user
-        tableView.reloadSections(IndexSet(integer: 0), with: .fade)
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -37,7 +37,11 @@ class AccountViewController: UITableViewController, UserManagerDelegate {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if viewModel.user != nil {
+            return 1
+        } else {
+            return 0
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
