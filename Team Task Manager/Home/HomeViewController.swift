@@ -13,12 +13,12 @@ struct HomeViewModel {
     var userInfo: UserModel?
 }
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, HomeManagerDelegate {
+class HomeViewController: UITableViewController, HomeManagerDelegate {
 
     lazy var teamManager = HomeManager()
     lazy var viewModel = HomeViewModel()
     
-    @IBOutlet weak var tableView: UITableView!
+    //@IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,12 +53,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         print(error)
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
             return viewModel.teams?.count ?? 0
@@ -67,13 +67,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTeamCell", for: indexPath) as! HomeTeamCell
             if let tempTeam = viewModel.teams?[indexPath.row] {
                 cell.titleLabel.text = tempTeam.teamName
-                cell.detailsTextView.text = tempTeam.id
+                cell.detailsTextView.text = tempTeam.teamDescription
             }
             
             return cell
@@ -84,12 +84,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "TeamViewSegue", sender: nil)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let teamID = viewModel.teams?[indexPath.row].id {
+            performSegue(withIdentifier: "TeamViewSegue", sender: teamID)
+        }
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 20
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 10
     }
 
     
@@ -97,14 +99,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if let id = sender as? String, let vc = segue.destination as? TeamViewController {
+            vc.teamID = id
+        }
     }
 
-}
-
-protocol HomeViewControllerDelegate {
-    func didSelectTeam(team: TeamModel)
-    func didAddNewTeam(team: TeamModel)
-    func didSellectProfile()
 }
