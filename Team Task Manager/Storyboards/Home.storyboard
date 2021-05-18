@@ -95,7 +95,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="zHZ-fK-frR" kind="presentation" identifier="editProfileSegue" modalTransitionStyle="crossDissolve" id="cDJ-NO-foE"/>
+                        <segue destination="zHZ-fK-frR" kind="presentation" identifier="editProfileSegue" id="cDJ-NO-foE"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SKa-cP-qa4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -144,9 +144,9 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="mqh-Az-gPx">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="mqh-Az-gPx">
                                 <rect key="frame" x="0.0" y="44" width="414" height="764"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="eus-Kk-j88"/>
@@ -192,16 +192,13 @@
                                             <action selector="pastColumn:" destination="Vmi-dj-svM" id="eux-hT-E8S"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem style="plain" id="ev4-0V-f0e">
-                                        <view key="customView" contentMode="scaleToFill" ambiguous="YES" id="Fnw-dV-Cdg">
-                                            <rect key="frame" x="184" y="9" width="46" height="36"/>
+                                    <barButtonItem width="100" style="plain" id="ev4-0V-f0e">
+                                        <view key="customView" contentMode="scaleToFill" id="Fnw-dV-Cdg">
+                                            <rect key="frame" x="151.5" y="9" width="111" height="36"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1bJ-xd-rns">
-                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="36"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="100" id="hmO-Nk-e9o"/>
-                                                    </constraints>
+                                                    <rect key="frame" x="0.0" y="0.0" width="111" height="36"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -266,16 +263,10 @@
                 <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="jQ3-48-Xae" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <tabBarItem key="tabBarItem" title="Teams" id="ypQ-a6-1Ty"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="U4m-EW-ica">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" largeTitles="YES" id="U4m-EW-ica">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" systemColor="labelColor"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
-                        <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="mH3-QL-FPD">
                         <autoresizingMask key="autoresizingMask"/>
@@ -295,7 +286,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="jVp-em-W42">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="HomeTeamCell" rowHeight="90" id="uwH-wx-ZtC" customClass="HomeTeamCell" customModule="Team_Task_Manager" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="49.5" width="414" height="90"/>

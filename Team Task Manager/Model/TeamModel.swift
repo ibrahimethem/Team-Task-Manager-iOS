@@ -18,7 +18,7 @@ struct TeamModel: Identifiable, Codable {
     var members: [String]
     var invitedMembers: [String]?
     var membersInfo: [MemberInfo]
-    var sections: [SectionModel]?
+    var sections: [SectionModel]
 }
 
 struct SectionModel: Codable {

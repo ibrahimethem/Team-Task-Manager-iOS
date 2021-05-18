@@ -14,6 +14,14 @@ class TaskCell: UITableViewCell {
     @IBOutlet weak var stackContainerView: UIStackView!
     @IBOutlet weak var timeLabel: UILabel!
     
+    var taskModel: TaskModel? {
+        didSet {
+            titleLabel.text = taskModel?.title
+            detailTextView.text = taskModel?.details
+            timeLabel.text = taskModel?.creationDate.dateValue().description
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         detailTextView.textContainerInset = .init(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
