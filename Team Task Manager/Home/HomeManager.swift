@@ -18,7 +18,6 @@ class HomeManager {
     var db: Firestore {
         let settings = FirestoreSettings()
         let tempDB = Firestore.firestore()
-        //settings.isPersistenceEnabled = false
         tempDB.settings = settings
         
         return tempDB

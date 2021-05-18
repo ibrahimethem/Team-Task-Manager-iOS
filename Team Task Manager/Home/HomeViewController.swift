@@ -38,19 +38,19 @@ class HomeViewController: UITableViewController, HomeManagerDelegate {
     }
     
     func didModifyTeam(_ teamManager: HomeManager, team: TeamModel) {
-        print(team)
+        print("didModify")
     }
     
     func didAddTeam(_ teamManager: HomeManager, team: TeamModel) {
-        print(team)
+        print("didAdd")
     }
     
     func didRemoveTeam(_ teamManager: HomeManager, team: TeamModel) {
-        print(team)
+        print("didRemove")
     }
     
     func didFailLoadTeams(_ teamManager: HomeManager, with error: Error) {
-        print(error)
+        print("didFail")
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
