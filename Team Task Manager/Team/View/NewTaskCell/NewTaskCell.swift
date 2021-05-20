@@ -28,6 +28,7 @@ class NewTaskCell: UITableViewCell, UITextViewDelegate {
         detailsTextView.text = "Add details"
         detailsTextView.font = UIFont.italicSystemFont(ofSize: 14)
         detailsTextView.textColor = .gray
+        titleTextField.becomeFirstResponder()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
