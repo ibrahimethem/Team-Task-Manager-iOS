@@ -9,7 +9,7 @@ import UIKit
 import FirebaseFirestore
 
 
-class SectionView: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource, NewTaskCellDelegate {
+class SectionView: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource, NewTaskCellDelegate, SectionHeaderDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -81,15 +81,19 @@ class SectionView: UICollectionViewCell, UITableViewDelegate, UITableViewDataSou
         }
     }
     
+    // MARK: Table Header Functions
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
             header = TeamSectionHeaderView()
+            header?.delegate = self
             switch sectionIndex?.section {
             case 0:
                 header?.textField.text = sectionModel?.title
                 header?.textField.isUserInteractionEnabled = false
                 return header
             case 1:
+                header?.moreButton.isHidden = true
                 return header
             default:
                 return nil
@@ -111,7 +115,7 @@ class SectionView: UICollectionViewCell, UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             if let task = sectionModel?.tasks?[indexPath.row] {
-                delegate?.selectTask(self, task: task)
+                delegate?.selectTask(self, task: task, taskIndex: indexPath)
             } else {
                 print("Unable to select")
             }
@@ -123,8 +127,13 @@ class SectionView: UICollectionViewCell, UITableViewDelegate, UITableViewDataSou
         }
     }
     
+    // MARK: Section Header Delegate Function
     
-    // New Task Delegate functions
+    func moreButtonPressed(_ teamSectionHeaderView: TeamSectionHeaderView) {
+        delegate?.editSection(self, section: sectionModel!)
+    }
+    
+    // MARK: New Task Delegate Functions
     
     func didAddNewTask(title: String, details: String) {
         let taskModel = TaskModel(creationDate: Timestamp(), details: details, title: title)
@@ -149,6 +158,7 @@ class SectionView: UICollectionViewCell, UITableViewDelegate, UITableViewDataSou
 
 protocol SectionViewDelegate {
     func addNewSection(_ sectionView: SectionView, section: SectionModel)
+    func editSection(_ sectionView: SectionView, section: SectionModel)
     func addTask(_ sectionView: SectionView, task: TaskModel)
-    func selectTask(_ sectionView: SectionView, task: TaskModel)
+    func selectTask(_ sectionView: SectionView, task: TaskModel, taskIndex: IndexPath)
 }

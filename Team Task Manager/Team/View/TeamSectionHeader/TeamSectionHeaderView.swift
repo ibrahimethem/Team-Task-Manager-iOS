@@ -9,13 +9,16 @@ import UIKit
 
 class TeamSectionHeaderView: UIView {
     
+    var delegate: SectionHeaderDelegate?
+    
     var contentview: UIView?
     let nibName = "TeamSectionHeaderView"
 
     @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var moreButton: UIButton!
     
     @IBAction func more(_ sender: UIButton) {
-        print(textField.text!)
+        delegate?.moreButtonPressed(self)
     }
     
     override init(frame: CGRect) {
@@ -40,4 +43,8 @@ class TeamSectionHeaderView: UIView {
         return nib.instantiate(withOwner: self, options: nil).first as? UIView
     }
     
+}
+
+protocol SectionHeaderDelegate {
+    func moreButtonPressed(_ teamSectionHeaderView: TeamSectionHeaderView)
 }

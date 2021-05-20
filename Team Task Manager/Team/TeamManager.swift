@@ -45,6 +45,57 @@ class TeamManager: SectionViewDelegate {
         }
     }
     
+    func removeTask(sectionIndex: IndexPath, taskIndex: IndexPath) {
+        guard let teamID = delegate.teamID else {
+            print("You need to set delegate first")
+            return
+        }
+        do {
+            team?.sections[sectionIndex.item].tasks?.remove(at: taskIndex.row)
+            try db.collection("TeamsTasks").document(teamID).setData(from: team)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func updateTask(sectionIndex: IndexPath, taskIndex: IndexPath, task: TaskModel) {
+        guard let teamID = delegate.teamID else {
+            print("You need to set delegate first")
+            return
+        }
+        do {
+            team?.sections[sectionIndex.item].tasks?[taskIndex.row] = task
+            try db.collection("TeamsTasks").document(teamID).setData(from: team)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func removeSection(sectionIndex: IndexPath) {
+        guard let teamID = delegate.teamID else {
+            print("You need to set delegate first")
+            return
+        }
+        do {
+            team?.sections.remove(at: sectionIndex.item)
+            try db.collection("TeamsTasks").document(teamID).setData(from: team)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func updateSection(sectionIndex: IndexPath, section: SectionModel) {
+        guard let teamID = delegate.teamID else {
+            print("You need to set delegate first")
+            return
+        }
+        do {
+            team?.sections[sectionIndex.item] = section
+            try db.collection("TeamsTasks").document(teamID).setData(from: team)
+        } catch {
+            print(error)
+        }
+    }
     
     // MARK: - Section View Delegate
     // In the first if of the try catch you need to use more clear way to do it. you give the sectionIndex sum of the item and section
@@ -63,6 +114,20 @@ class TeamManager: SectionViewDelegate {
         
     }
     
+    func editSection(_ sectionView: SectionView, section: SectionModel) {
+        if let vc = delegate as? TeamViewController {
+            guard let indexPath = sectionView.sectionIndex else { return }
+            
+            let presentedVC = UIStoryboard(name: "Home", bundle: nil).instantiateViewController(withIdentifier: "SectionDetailViewController") as! SectionDetailViewController
+            
+            presentedVC.sectionModel = section
+            presentedVC.sectionIndex = indexPath
+            presentedVC.presentingVC = vc
+            
+            vc.present(presentedVC, animated: true, completion: nil)
+        }
+    }
+    
     func addTask(_ sectionView: SectionView, task: TaskModel) {
         guard let teamID = delegate.teamID else {
             print("You need to set delegate first")
@@ -78,8 +143,18 @@ class TeamManager: SectionViewDelegate {
         }
     }
     
-    func selectTask(_ sectionView: SectionView, task: TaskModel) {
-        print(task.title ?? "", "selected")
+    func selectTask(_ sectionView: SectionView, task: TaskModel, taskIndex: IndexPath) {
+        if let vc = delegate as? TeamViewController {
+            guard let indexPath = sectionView.sectionIndex else { return }
+            
+            let presentedVC = UIStoryboard(name: "Home", bundle: nil).instantiateViewController(withIdentifier: "TaskDetailViewController") as! TaskDetailViewController
+            presentedVC.taskIndex = taskIndex
+            presentedVC.sectionIndex = indexPath
+            presentedVC.taskModel = task
+            presentedVC.presentingVC = vc
+            
+            vc.present(presentedVC, animated: true, completion: nil)
+        }
     }
     
     

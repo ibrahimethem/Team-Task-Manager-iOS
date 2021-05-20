@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TeamSectionHeaderView" customModule="Team_Task_Manager" customModuleProvider="target">
             <connections>
+                <outlet property="moreButton" destination="hfq-Wl-dHc" id="S8p-qs-FGo"/>
                 <outlet property="textField" destination="vOp-7q-f16" id="brn-Yr-eGm"/>
             </connections>
         </placeholder>
@@ -24,7 +25,7 @@
                     <subviews>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Add section header" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vOp-7q-f16">
                             <rect key="frame" x="0.0" y="0.0" width="339" height="818"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hfq-Wl-dHc">

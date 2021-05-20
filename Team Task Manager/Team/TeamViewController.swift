@@ -88,12 +88,35 @@ class TeamViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
+    func reloadTaskDetailIfNeeded() {
+        if let vc = self.presentedViewController as? TaskDetailViewController {
+            if teamModel?.sections.count ?? 0 > vc.sectionIndex?.item ?? 0 {
+                if teamModel!.sections[vc.sectionIndex!.item].tasks?.count ?? 0 > vc.taskIndex?.row ?? 0 {
+                    vc.taskModel = teamModel!.sections[vc.sectionIndex!.item].tasks![vc.taskIndex!.row]
+                    vc.tableView.reloadData()
+                } else {
+                    vc.dismiss(animated: true, completion: nil)
+                }
+            } else {
+                vc.dismiss(animated: true, completion: nil)
+            }
+        } else if let vc = self.presentedViewController as? SectionDetailViewController {
+            if teamModel?.sections.count ?? 0 > vc.sectionIndex?.item ?? 0 {
+                vc.sectionModel = teamModel?.sections[vc.sectionIndex!.item]
+                vc.viewDidLoad()
+            } else {
+                dismiss(animated: true, completion: nil)
+            }
+        }
+    }
+    
     
     // MARK: Team Manager Delegate
     
     func didLoadTeam(_ teamManager: TeamManager, team: TeamModel) {
         teamModel = team
         reloadView()
+        reloadTaskDetailIfNeeded()
     }
 
 
