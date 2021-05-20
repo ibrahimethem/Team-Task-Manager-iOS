@@ -7,7 +7,7 @@
 
 import UIKit
 import FirebaseFirestore
-
+import FirebaseAuth
 
 class SectionView: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource, NewTaskCellDelegate, SectionHeaderDelegate {
 
@@ -136,7 +136,8 @@ class SectionView: UICollectionViewCell, UITableViewDelegate, UITableViewDataSou
     // MARK: New Task Delegate Functions
     
     func didAddNewTask(title: String, details: String) {
-        let taskModel = TaskModel(creationDate: Timestamp(), details: details, title: title)
+        let userID = Auth.auth().currentUser?.uid
+        let taskModel = TaskModel(creationDate: Timestamp(), creator: userID, details: details, title: title)
         isAdding = false
         if sectionIndex?.section == 0 {
             delegate?.addTask(self, task: taskModel)

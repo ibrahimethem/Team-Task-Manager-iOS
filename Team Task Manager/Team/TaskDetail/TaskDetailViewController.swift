@@ -43,8 +43,8 @@ class TaskDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             let cell = tableView.dequeueReusableCell(withIdentifier: "TaskDetailInfoCell", for: indexPath) as! TaskDetailInfoCell
             cell.titleTextField.text = taskModel?.title
             cell.detailsTextView.text = taskModel?.details
-            cell.creationDate.text = taskModel?.creationDate.dateValue().description
-            cell.creatorLabel.text = "Created by me"
+            cell.creationDate.text = "at \(taskModel?.creationDate.dateValue().description ?? "")"
+            cell.creatorLabel.text = "Created by \(taskModel?.creator ?? "")"
             
             return cell
         } else if indexPath.section == 1 {

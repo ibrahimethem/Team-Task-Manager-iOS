@@ -28,6 +28,7 @@ struct SectionModel: Codable {
 
 struct TaskModel: Codable {
     var creationDate: Timestamp!
+    var creator: String!
     var details: String!
     var title: String!
 }
