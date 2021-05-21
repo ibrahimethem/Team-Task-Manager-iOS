@@ -44,7 +44,11 @@ class TaskDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             cell.titleTextField.text = taskModel?.title
             cell.detailsTextView.text = taskModel?.details
             cell.creationDate.text = "at \(taskModel?.creationDate.dateValue().description ?? "")"
-            cell.creatorLabel.text = "Created by \(taskModel?.creator ?? "")"
+            if let creatorName = presentingVC?.teamManager.users?.first(where: { $0.id == taskModel?.creator })?.profileName {
+                cell.creatorLabel.text = "Created by \(creatorName)"
+            } else {
+                cell.creatorLabel.text = "Created by unknown user"
+            }
             
             return cell
         } else if indexPath.section == 1 {

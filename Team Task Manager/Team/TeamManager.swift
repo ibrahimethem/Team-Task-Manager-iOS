@@ -25,6 +25,7 @@ class TeamManager: SectionViewDelegate {
     
     var delegate: TeamManagerDelegate
     var team: TeamModel?
+    var users: [UserModel]?
     
     func addSnapshotListener() {
         guard let teamID = delegate.teamID else {
@@ -43,6 +44,23 @@ class TeamManager: SectionViewDelegate {
                 self.delegate.didLoadTeam(self, team: team)
             }
         }
+    }
+    
+    func getMemebers(members: [String]?) {
+        guard let memberArray = members else { return }
+        db.collection("userProfileInfo").whereField("userID", in: memberArray).getDocuments { querySnapshot, error in
+            if let err = error {
+                print(err)
+            }
+            
+            if let documents = querySnapshot?.documents {
+                let userArray = documents.compactMap({ queryDocumentSnapshot -> UserModel? in
+                    return try? queryDocumentSnapshot.data(as: UserModel.self)
+                })
+                self.users = userArray
+            }
+        }
+        
     }
     
     func removeTask(sectionIndex: IndexPath, taskIndex: IndexPath) {

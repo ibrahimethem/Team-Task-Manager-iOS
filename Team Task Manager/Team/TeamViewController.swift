@@ -117,6 +117,7 @@ class TeamViewController: UIViewController, UICollectionViewDelegate, UICollecti
         teamModel = team
         reloadView()
         reloadTaskDetailIfNeeded()
+        teamManager.getMemebers(members: team.members)
     }
 
 
