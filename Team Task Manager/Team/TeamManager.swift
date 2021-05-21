@@ -136,7 +136,7 @@ class TeamManager: SectionViewDelegate {
         if let vc = delegate as? TeamViewController {
             guard let indexPath = sectionView.sectionIndex else { return }
             
-            let presentedVC = UIStoryboard(name: "Home", bundle: nil).instantiateViewController(withIdentifier: "SectionDetailViewController") as! SectionDetailViewController
+            let presentedVC = UIStoryboard(name: "Team", bundle: nil).instantiateViewController(withIdentifier: "SectionDetailViewController") as! SectionDetailViewController
             
             presentedVC.sectionModel = section
             presentedVC.sectionIndex = indexPath
@@ -165,7 +165,7 @@ class TeamManager: SectionViewDelegate {
         if let vc = delegate as? TeamViewController {
             guard let indexPath = sectionView.sectionIndex else { return }
             
-            let presentedVC = UIStoryboard(name: "Home", bundle: nil).instantiateViewController(withIdentifier: "TaskDetailViewController") as! TaskDetailViewController
+            let presentedVC = UIStoryboard(name: "Team", bundle: nil).instantiateViewController(withIdentifier: "TaskDetailViewController") as! TaskDetailViewController
             presentedVC.taskIndex = taskIndex
             presentedVC.sectionIndex = indexPath
             presentedVC.taskModel = task
