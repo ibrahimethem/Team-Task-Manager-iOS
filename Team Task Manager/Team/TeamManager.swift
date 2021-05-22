@@ -34,7 +34,6 @@ class TeamManager: SectionViewDelegate {
         }
         
         db.collection("TeamsTasks").document(teamID).addSnapshotListener { [unowned self] documentSnapshot, error in
-            print("got team")
             if let err = error {
                 print(err)
             }
@@ -58,9 +57,9 @@ class TeamManager: SectionViewDelegate {
                     return try? queryDocumentSnapshot.data(as: UserModel.self)
                 })
                 self.users = userArray
+                self.delegate.didLoadMembers(self, members: self.users!)
             }
         }
-        
     }
     
     func removeTask(sectionIndex: IndexPath, taskIndex: IndexPath) {
@@ -181,4 +180,5 @@ class TeamManager: SectionViewDelegate {
 protocol TeamManagerDelegate {
     var teamID: String? { get set }
     func didLoadTeam(_ teamManager: TeamManager, team: TeamModel)
+    func didLoadMembers(_ teamManager: TeamManager, members: [UserModel])
 }

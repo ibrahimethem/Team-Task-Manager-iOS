@@ -245,10 +245,17 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationItem key="navigationItem" title="Team" largeTitleDisplayMode="never" id="Om1-4A-UXE"/>
+                    <navigationItem key="navigationItem" title="Team" largeTitleDisplayMode="never" id="Om1-4A-UXE">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Users" id="wrl-lo-Xhe">
+                            <connections>
+                                <action selector="showMembers:" destination="Vmi-dj-svM" id="xy1-st-MGQ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="Wxa-II-aJ3" id="gIl-pm-nTY"/>
                         <outlet property="columnNumberLabel" destination="1bJ-xd-rns" id="qOd-aM-XRz"/>
+                        <outlet property="membersButton" destination="wrl-lo-Xhe" id="d7l-5m-Rl7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3bL-Gb-EgE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

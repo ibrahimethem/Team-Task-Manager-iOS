@@ -330,6 +330,112 @@
             </objects>
             <point key="canvasLocation" x="4224.6376811594209" y="798.21428571428567"/>
         </scene>
+        <!--Members-->
+        <scene sceneID="of2-fC-gaY">
+            <objects>
+                <tableViewController storyboardIdentifier="MembersViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="EzR-0i-OY5" customClass="MembersViewController" customModule="Team_Task_Manager" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="Ezn-eP-reu">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MemberCell" rowHeight="76" id="OCn-Fu-cvw" customClass="MemberCell" customModule="Team_Task_Manager" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="49.5" width="414" height="76"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OCn-Fu-cvw" id="fu5-La-Muy">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="76"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="SDN-vs-Aqv">
+                                            <rect key="frame" x="20" y="11" width="374" height="54"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uxo-vE-iaw">
+                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="25"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" priority="999" constant="25" id="aRP-jq-ywk"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jdu-nA-t0D">
+                                                    <rect key="frame" x="0.0" y="25" width="374" height="29"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" priority="998" constant="22" id="Y1g-9f-gcZ"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="SDN-vs-Aqv" firstAttribute="leading" secondItem="fu5-La-Muy" secondAttribute="leadingMargin" id="3YJ-Cg-Eek"/>
+                                        <constraint firstItem="SDN-vs-Aqv" firstAttribute="trailing" secondItem="fu5-La-Muy" secondAttribute="trailingMargin" id="KDp-NH-xl5"/>
+                                        <constraint firstItem="SDN-vs-Aqv" firstAttribute="bottom" secondItem="fu5-La-Muy" secondAttribute="bottomMargin" id="Wya-AD-ODR"/>
+                                        <constraint firstItem="SDN-vs-Aqv" firstAttribute="top" secondItem="fu5-La-Muy" secondAttribute="topMargin" id="kZc-3g-iAC"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="emailLabel" destination="jdu-nA-t0D" id="fvR-U1-6wr"/>
+                                    <outlet property="nameLabel" destination="Uxo-vE-iaw" id="nlq-zU-bBo"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="EzR-0i-OY5" id="dhh-i4-ogg"/>
+                            <outlet property="delegate" destination="EzR-0i-OY5" id="OLj-vO-Mkb"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Members" id="s5X-Xf-dIv">
+                        <barButtonItem key="rightBarButtonItem" title="Invite" id="Cnq-9f-bnl"/>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="hJL-2G-tjq" kind="show" identifier="MemberDetailSegue" id="SJo-jd-A2S"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9xM-0g-Fo1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4225" y="1551"/>
+        </scene>
+        <!--Member Detail View Controller-->
+        <scene sceneID="GuA-2r-VZm">
+            <objects>
+                <tableViewController id="hJL-2G-tjq" customClass="MemberDetailViewController" customModule="Team_Task_Manager" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="sVM-pa-Coy">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="hJL-2G-tjq" id="QxP-93-iVJ"/>
+                            <outlet property="delegate" destination="hJL-2G-tjq" id="IKK-Sn-0xH"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="gcd-Sb-BVs"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Phg-iq-vYo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5148" y="1551"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="WLo-6R-wok">
+            <objects>
+                <navigationController storyboardIdentifier="MemberNavViewController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zgx-wo-3Pb" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="aNz-FG-AYb">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="EzR-0i-OY5" kind="relationship" relationship="rootViewController" id="bXP-N1-PLP"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5ID-EB-4br" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3225" y="1551"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Add-Button" width="20" height="20"/>

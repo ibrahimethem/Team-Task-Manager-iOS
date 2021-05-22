@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SideMenu
 
 struct TeamViewSection {
     var overView = -1
@@ -17,6 +18,7 @@ class TeamViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var columnNumberLabel: UILabel!
+    @IBOutlet weak var membersButton: UIBarButtonItem!
     
     var teamID: String?
     lazy var teamManager = TeamManager(delegate: self)
@@ -33,7 +35,6 @@ class TeamViewController: UIViewController, UICollectionViewDelegate, UICollecti
         navigationController?.navigationBar.prefersLargeTitles = true
         
         teamManager.addSnapshotListener()
-        //collectionView.reloadData()
         
     }
     
@@ -46,6 +47,16 @@ class TeamViewController: UIViewController, UICollectionViewDelegate, UICollecti
         reloadColumnNumber()
     }
     
+    
+    // MARK: Navbar Functions
+    
+    @IBAction func showMembers(_ sender: UIBarButtonItem) {
+        let vc = UIStoryboard(name: "Team", bundle: nil).instantiateViewController(withIdentifier: "MemberNavViewController") as! UINavigationController
+        if let root = vc.viewControllers.first as? MembersViewController {
+            root.members = teamManager.users
+        }
+        present(vc, animated: true, completion: nil)
+    }
     
     // MARK: Toolbar Functions
     
@@ -110,7 +121,6 @@ class TeamViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
-    
     // MARK: Team Manager Delegate
     
     func didLoadTeam(_ teamManager: TeamManager, team: TeamModel) {
@@ -118,6 +128,10 @@ class TeamViewController: UIViewController, UICollectionViewDelegate, UICollecti
         reloadView()
         reloadTaskDetailIfNeeded()
         teamManager.getMemebers(members: team.members)
+    }
+    
+    func didLoadMembers(_ teamManager: TeamManager, members: [UserModel]) {
+        membersButton.isEnabled = true
     }
 
 
