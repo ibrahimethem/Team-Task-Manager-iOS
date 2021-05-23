@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class MembersViewController: UITableViewController {
     
@@ -52,5 +53,19 @@ class MembersViewController: UITableViewController {
         } else if let dest = segue.destination as? InviteMemberViewController {
             dest.teamManager = teamManager
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        if teamManager?.team?.adminID == Auth.auth().currentUser?.uid {
+            let kickAction = UITableViewRowAction(style: .default, title: "Kick") { _, indexPath in
+                if let id = self.members?[indexPath.row].id {
+                    self.teamManager?.kickMember(with: id)
+                }
+            }
+            kickAction.backgroundColor = .systemRed
+            return [kickAction]
+        }
+        return nil
     }
 }

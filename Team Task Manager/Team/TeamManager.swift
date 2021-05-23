@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import FirebaseAuth
 
 class TeamManager: SectionViewDelegate {
    
@@ -64,7 +65,7 @@ class TeamManager: SectionViewDelegate {
     }
     
     func getInvitedMembers() {
-        guard let memberArray = team?.invitedMembers else { return }
+        guard let memberArray = team?.invitedMembers, memberArray.count > 0 else { return }
         db.collection("userProfileInfo").whereField("userID", in: memberArray).getDocuments { querySnapshot, error in
             if let err = error {
                 print(err)
@@ -78,8 +79,20 @@ class TeamManager: SectionViewDelegate {
         }
     }
     
+    func kickMember(with id: String) {
+        guard let userID = Auth.auth().currentUser?.uid else { return }
+        if team?.adminID == userID {
+            if let i = team?.members.firstIndex(where: {$0 == id}) {
+                team?.members.remove(at: i)
+                updateTeam()
+            }
+            
+        } else {
+            print("You are not admin")
+        }
+    }
+    
     func inviteMember(with email: String) {
-        
         db.collection("userProfileInfo").whereField("email", isEqualTo: email).getDocuments { QuerySnapshot, error in
             if error != nil {
                 print(error!)
