@@ -38,15 +38,18 @@ class HomeViewController: UITableViewController, HomeManagerDelegate {
     }
     
     func didModifyTeam(_ teamManager: HomeManager, team: TeamModel) {
-        print("didModify")
+        viewModel.teams = teamManager.teams
+        tableView.reloadData()
     }
     
     func didAddTeam(_ teamManager: HomeManager, team: TeamModel) {
-        print("didAdd")
+        viewModel.teams = teamManager.teams
+        tableView.reloadData()
     }
     
     func didRemoveTeam(_ teamManager: HomeManager, team: TeamModel) {
-        print("didRemove")
+        viewModel.teams = teamManager.teams
+        tableView.reloadData()
     }
     
     func didFailLoadTeams(_ teamManager: HomeManager, with error: Error) {
