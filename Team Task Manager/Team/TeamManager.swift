@@ -24,6 +24,8 @@ class TeamManager: SectionViewDelegate {
     }
     
     var delegate: TeamManagerDelegate
+    var invitedMembersDelegate: InvitedMembersDelegate?
+    
     var team: TeamModel?
     var users: [UserModel]?
     
@@ -51,7 +53,6 @@ class TeamManager: SectionViewDelegate {
             if let err = error {
                 print(err)
             }
-            
             if let documents = querySnapshot?.documents {
                 let userArray = documents.compactMap({ queryDocumentSnapshot -> UserModel? in
                     return try? queryDocumentSnapshot.data(as: UserModel.self)
@@ -59,6 +60,59 @@ class TeamManager: SectionViewDelegate {
                 self.users = userArray
                 self.delegate.didLoadMembers(self, members: self.users!)
             }
+        }
+    }
+    
+    func getInvitedMembers() {
+        guard let memberArray = team?.invitedMembers else { return }
+        db.collection("userProfileInfo").whereField("userID", in: memberArray).getDocuments { querySnapshot, error in
+            if let err = error {
+                print(err)
+            }
+            if let documents = querySnapshot?.documents {
+                let userArray = documents.compactMap({ queryDocumentSnapshot -> UserModel? in
+                    return try? queryDocumentSnapshot.data(as: UserModel.self)
+                })
+                self.invitedMembersDelegate?.didLoadInvitedMembers(self, invitedMembers: userArray)
+            }
+        }
+    }
+    
+    func inviteMember(with email: String) {
+        
+        db.collection("userProfileInfo").whereField("email", isEqualTo: email).getDocuments { QuerySnapshot, error in
+            if error != nil {
+                print(error!)
+                return
+            }
+            
+            if let doc = QuerySnapshot?.documents.first {
+                if let userID = try? doc.data(as: UserModel.self)?.id {
+                    if (self.team?.invitedMembers?.contains(userID) ?? true) {
+                        print("User already invited")
+                    } else if (self.team?.members.contains(userID) ?? true) {
+                        print("User is already a member")
+                    } else {
+                        self.team?.invitedMembers?.append(userID)
+                        self.updateTeam()
+                    }
+                }
+            } else {
+                print("There is no such user.")
+            }
+            
+        }
+    }
+    
+    func updateTeam() {
+        guard let teamID = delegate.teamID else {
+            print("You need to set delegate first")
+            return
+        }
+        do {
+            try db.collection("TeamsTasks").document(teamID).setData(from: team)
+        } catch {
+            print(error)
         }
     }
     
@@ -181,4 +235,8 @@ protocol TeamManagerDelegate {
     var teamID: String? { get set }
     func didLoadTeam(_ teamManager: TeamManager, team: TeamModel)
     func didLoadMembers(_ teamManager: TeamManager, members: [UserModel])
+}
+
+protocol InvitedMembersDelegate {
+    func didLoadInvitedMembers(_ teamManager: TeamManager, invitedMembers: [UserModel])
 }

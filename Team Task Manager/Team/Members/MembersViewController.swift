@@ -10,9 +10,14 @@ import UIKit
 class MembersViewController: UITableViewController {
     
     var members: [UserModel]?
+    var teamManager: TeamManager?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    @IBAction func inviteMembers(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "InviteMembersSegue", sender: nil)
     }
 
     // MARK: - Table view data source
@@ -44,6 +49,8 @@ class MembersViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let dest = segue.destination as? MemberDetailViewController, let member = sender as? UserModel {
             dest.member = member
+        } else if let dest = segue.destination as? InviteMemberViewController {
+            dest.teamManager = teamManager
         }
     }
 }

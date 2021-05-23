@@ -54,6 +54,7 @@ class TeamViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let vc = UIStoryboard(name: "Team", bundle: nil).instantiateViewController(withIdentifier: "MemberNavViewController") as! UINavigationController
         if let root = vc.viewControllers.first as? MembersViewController {
             root.members = teamManager.users
+            root.teamManager = teamManager
         }
         present(vc, animated: true, completion: nil)
     }

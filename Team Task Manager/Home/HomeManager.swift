@@ -13,6 +13,7 @@ import FirebaseAuth
 class HomeManager {
     
     var teams: [TeamModel]?
+    
     var delegate: HomeManagerDelegate?
     
     var db: Firestore {
