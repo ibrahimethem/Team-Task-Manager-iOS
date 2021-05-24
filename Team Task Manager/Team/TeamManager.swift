@@ -48,6 +48,16 @@ class TeamManager: SectionViewDelegate {
         }
     }
     
+    func userDidLoadTeam(userID: String) {
+        if let i = team?.membersInfo.firstIndex(where: { $0.userID ==  userID}) {
+            team?.membersInfo[i].joinDate = Timestamp()
+        } else {
+            let memberInfo = MemberInfo(userID: userID, joinDate: Timestamp())
+            team?.membersInfo.append(memberInfo)
+        }
+        updateTeam()
+    }
+    
     func getMemebers(members: [String]?) {
         guard let memberArray = members else { return }
         db.collection("userProfileInfo").whereField("userID", in: memberArray).getDocuments { querySnapshot, error in

@@ -17,7 +17,7 @@ class AccountViewController: UITableViewController, UserManagerDelegate, Account
         var user: UserModel?
     }
     
-    var invites: [TeamOverViewModel]?
+    var invites: [TeamSummaryModel]?
     
     private var viewModel = ViewModel()
     
@@ -38,7 +38,7 @@ class AccountViewController: UITableViewController, UserManagerDelegate, Account
         tableView.reloadData()
     }
     
-    func didLoadInvites(_ accountManager: AccountManager, teamOverViews: [TeamOverViewModel]) {
+    func didLoadInvites(_ accountManager: AccountManager, teamOverViews: [TeamSummaryModel]) {
         invites = teamOverViews
         tableView.reloadData()
     }

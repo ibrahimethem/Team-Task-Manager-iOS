@@ -10,7 +10,7 @@ import FirebaseAuth
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct TeamOverViewModel: Codable, Identifiable {
+struct TeamSummaryModel: Codable, Identifiable {
     @DocumentID var id: String?
     var teamName: String
     var teamDescription: String
@@ -29,7 +29,7 @@ class AccountManager {
     }
     
     var user: UserModel?
-    var teams: [TeamOverViewModel]?
+    var teams: [TeamSummaryModel]?
     
     var delegate: AccountManagerDelegate?
     
@@ -42,8 +42,8 @@ class AccountManager {
             }
             
             if let docs = querySnapshot?.documents {
-                let teams = docs.compactMap { queryDocumentSnapshot -> TeamOverViewModel? in
-                    return try? queryDocumentSnapshot.data(as: TeamOverViewModel.self)
+                let teams = docs.compactMap { queryDocumentSnapshot -> TeamSummaryModel? in
+                    return try? queryDocumentSnapshot.data(as: TeamSummaryModel.self)
                 }
                 self.teams = teams
                 self.delegate?.didLoadInvites(self, teamOverViews: teams)
@@ -84,5 +84,5 @@ class AccountManager {
 }
 
 protocol AccountManagerDelegate {
-    func didLoadInvites(_ accountManager: AccountManager, teamOverViews: [TeamOverViewModel])
+    func didLoadInvites(_ accountManager: AccountManager, teamOverViews: [TeamSummaryModel])
 }

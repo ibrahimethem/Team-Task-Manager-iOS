@@ -7,11 +7,12 @@
 
 import UIKit
 import SideMenu
+import FirebaseAuth
 
-struct TeamViewSection {
-    var overView = -1
-    var tasks = 0
-    var newSection = 1
+enum TeamViewSection: Int {
+    case overView = 0
+    case tasks = 1
+    case newSection = 2
 }
 
 class TeamViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, TeamManagerDelegate {
@@ -32,6 +33,7 @@ class TeamViewController: UIViewController, UICollectionViewDelegate, UICollecti
         collectionView.dataSource = self
         
         collectionView.register(UINib(nibName: "SectionView", bundle: nil), forCellWithReuseIdentifier: "SectionView")
+        collectionView.register(UINib(nibName: "OverviewView", bundle: nil), forCellWithReuseIdentifier: "OverviewView")
         navigationController?.navigationBar.prefersLargeTitles = true
         
         teamManager.addSnapshotListener()
@@ -63,23 +65,52 @@ class TeamViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     @IBAction func nextColumn(_ sender: UIBarButtonItem) {
         var indexPath = collectionView.currentIndexPath
-        let numberOfItems = collectionView(collectionView, numberOfItemsInSection: 0)
-        if indexPath.item != numberOfItems - 1 {
-            indexPath.item = indexPath.item + 1
-        } else {
-            indexPath.section = 1
+        let numberOfItems = collectionView(collectionView, numberOfItemsInSection: TeamViewSection.tasks.rawValue)
+        switch indexPath.section {
+        case TeamViewSection.overView.rawValue:
+            if numberOfItems > 0 {
+                indexPath.section = TeamViewSection.tasks.rawValue
+                indexPath.item = 0
+            } else {
+                indexPath.section = TeamViewSection.newSection.rawValue
+                indexPath.item = 0
+            }
+        
+        case TeamViewSection.tasks.rawValue:
+            if indexPath.item != numberOfItems - 1 {
+                indexPath.item = indexPath.item + 1
+            } else {
+                indexPath.section = TeamViewSection.newSection.rawValue
+                indexPath.item = 0
+            }
+        case TeamViewSection.newSection.rawValue:
+            indexPath.section = 0
             indexPath.item = 0
+        default:
+            print("Something wrong")
         }
         collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
     }
     
     @IBAction func pastColumn(_ sender: UIBarButtonItem) {
         var indexPath = collectionView.currentIndexPath
-        if indexPath.item > 0 {
-            indexPath.item = indexPath.item - 1
-        } else if indexPath.section == 1 {
-            indexPath.section = 0
-            indexPath.item = collectionView(collectionView, numberOfItemsInSection: 0) - 1
+        
+        switch indexPath.section {
+        case TeamViewSection.overView.rawValue:
+            indexPath.section = TeamViewSection.newSection.rawValue
+            indexPath.item = 0
+        case TeamViewSection.tasks.rawValue:
+            if indexPath.item > 0 {
+                indexPath.item = indexPath.item - 1
+            } else {
+                indexPath.section = TeamViewSection.overView.rawValue
+                indexPath.item = 0
+            }
+        case TeamViewSection.newSection.rawValue:
+            indexPath.section = TeamViewSection.tasks.rawValue
+            indexPath.item = collectionView(collectionView, numberOfItemsInSection: TeamViewSection.tasks.rawValue) - 1
+        default:
+            print("Something wrong")
         }
         collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
     }
@@ -92,11 +123,17 @@ class TeamViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func reloadColumnNumber() {
         let indexPath = collectionView.currentIndexPath
-        if indexPath.section == 0 {
+        
+        switch indexPath.section {
+        case TeamViewSection.overView.rawValue:
+            columnNumberLabel.text = "Home"
+        case TeamViewSection.tasks.rawValue:
             let numberOfItems = collectionView(collectionView, numberOfItemsInSection: 0)
             columnNumberLabel.text = "\(indexPath.item + 1) of \(numberOfItems)"
-        } else {
+        case TeamViewSection.newSection.rawValue:
             columnNumberLabel.text = "New"
+        default:
+            print("Something wrong")
         }
     }
     
@@ -139,12 +176,12 @@ class TeamViewController: UIViewController, UICollectionViewDelegate, UICollecti
     // MARK: UICollectionView
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return 3
     }
 
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if section == 0 {
+        if section == TeamViewSection.tasks.rawValue {
             return teamModel?.sections.count ?? 0
         } else {
             return 1
@@ -154,16 +191,22 @@ class TeamViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SectionView", for: indexPath) as! SectionView
         
-        //let numberOfItems = self.collectionView(collectionView, numberOfItemsInSection: 0)
-        
-        if indexPath.section == 0, let sect = teamModel?.sections[indexPath.item] {
-            cell.viewModel.sectionModel = SectionModel(title: "New section", tasks: [])
-            cell.sectionModel = sect
-        } else {
-            cell.viewModel.sectionModel = SectionModel(title: "New section", tasks: [])
+        switch indexPath.section {
+        case TeamViewSection.overView.rawValue:
+            let overViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "OverviewView", for: indexPath) as! OverviewView
+            if let team = teamModel, let userID = Auth.auth().currentUser?.uid {
+                let teamOverview = TeamOverviewModel(team: team, userID: userID)
+                overViewCell.teamOverview = teamOverview
+            }
+            overViewCell.tableView.reloadData()
+            return overViewCell
+        case TeamViewSection.tasks.rawValue:
+            if let sect = teamModel?.sections[indexPath.item] {
+                cell.sectionModel = sect
+            }
+        default:
             cell.sectionModel = SectionModel(title: "New section", tasks: [])
         }
-        cell.viewModel.sectionIndex = indexPath
         cell.sectionIndex = indexPath
         cell.delegate = teamManager
     
@@ -191,16 +234,21 @@ extension UICollectionView {
     var currentIndexPath: IndexPath {
         let contentWidth = contentSize.width
         let numberOfPages = contentWidth / frame.width
-        var currentPage = Int(numberOfPages * ((contentOffset.x + 1) / (contentWidth + 1)))
+        let currentPage = Int(numberOfPages * ((contentOffset.x + 1) / (contentWidth + 1)))
         
-        let numberOfItems = self.numberOfItems(inSection: 0)
+        let numberOfItems = self.numberOfItems(inSection: TeamViewSection.tasks.rawValue)
         
-        var section = 0
-        if currentPage == numberOfItems {
-            section = 1
-            currentPage = 0
+        var section = TeamViewSection.overView.rawValue
+        var item = 0
+        
+        if currentPage > 0, currentPage <= numberOfItems {
+            section = TeamViewSection.tasks.rawValue
+            item = currentPage - 1
+        } else if currentPage > numberOfItems {
+            section = TeamViewSection.newSection.rawValue
+            item = 0
         }
         
-        return IndexPath(item: currentPage, section: section)
+        return IndexPath(item: item, section: section)
     }
 }

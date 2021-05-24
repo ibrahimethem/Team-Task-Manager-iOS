@@ -25,13 +25,6 @@ class SectionView: UICollectionViewCell, UITableViewDelegate, UITableViewDataSou
     
     var header: TeamSectionHeaderView?
     
-    struct ViewModel {
-        var sectionModel: SectionModel?
-        var sectionIndex: IndexPath?
-    }
-    
-    lazy var viewModel = ViewModel()
-    
     var delegate: SectionViewDelegate?
     
     override func awakeFromNib() {
@@ -88,11 +81,11 @@ class SectionView: UICollectionViewCell, UITableViewDelegate, UITableViewDataSou
             header = TeamSectionHeaderView()
             header?.delegate = self
             switch sectionIndex?.section {
-            case 0:
+            case TeamViewSection.tasks.rawValue:
                 header?.textField.text = sectionModel?.title
                 header?.textField.isUserInteractionEnabled = false
                 return header
-            case 1:
+            case TeamViewSection.newSection.rawValue:
                 header?.moreButton.isHidden = true
                 return header
             default:
@@ -139,9 +132,9 @@ class SectionView: UICollectionViewCell, UITableViewDelegate, UITableViewDataSou
         let userID = Auth.auth().currentUser?.uid
         let taskModel = TaskModel(creationDate: Timestamp(), creator: userID, details: details, title: title)
         isAdding = false
-        if sectionIndex?.section == 0 {
+        if sectionIndex?.section == TeamViewSection.tasks.rawValue {
             delegate?.addTask(self, task: taskModel)
-        } else if sectionIndex?.section == 1 {
+        } else if sectionIndex?.section == TeamViewSection.newSection.rawValue {
             let sectionHeader = header?.textField.text ?? "New section"
             let sm = SectionModel(title: sectionHeader, tasks: [taskModel])
             delegate?.addNewSection(self, section: sm)
