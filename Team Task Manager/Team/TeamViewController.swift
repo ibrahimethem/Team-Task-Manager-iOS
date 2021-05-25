@@ -197,6 +197,7 @@ class TeamViewController: UIViewController, UICollectionViewDelegate, UICollecti
             if let team = teamModel, let userID = Auth.auth().currentUser?.uid {
                 let teamOverview = TeamOverviewModel(team: team, userID: userID)
                 overViewCell.teamOverview = teamOverview
+                overViewCell.teamManager = self.teamManager
             }
             overViewCell.tableView.reloadData()
             return overViewCell

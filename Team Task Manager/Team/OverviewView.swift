@@ -7,17 +7,23 @@
 
 import UIKit
 
-class OverviewView: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource {
+class OverviewView: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource, TeamOverviewCellDelegate {
     
     
     @IBOutlet weak var tableView: UITableView!
     
     var teamOverview: TeamOverviewModel?
+    var teamManager: TeamManager?
 
     override func awakeFromNib() {
         super.awakeFromNib()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.register(UINib(nibName: "TeamOverviewCell", bundle: nil), forCellReuseIdentifier: "TeamOverviewCell")
+    }
+    
+    func updateTeamOverview(titleText: String, descriptionText: String) {
+        teamManager?.updateOverview(name: titleText, description: descriptionText)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -26,7 +32,7 @@ class OverviewView: UICollectionViewCell, UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 2
+            return 1
         } else {
             return 2
         }
@@ -36,15 +42,12 @@ class OverviewView: UICollectionViewCell, UITableViewDelegate, UITableViewDataSo
         guard let team = teamOverview else { return UITableViewCell() }
         switch indexPath.section {
         case 0:
-            if indexPath.row == 0 {
-                let cell = UITableViewCell()
-                cell.textLabel?.text = team.teamName
-                return cell
-            } else {
-                let cell = UITableViewCell()
-                cell.textLabel?.text = team.teamDescription
-                return cell
-            }
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TeamOverviewCell") as! TeamOverviewCell
+            
+            cell.titleTextfield.text = team.teamName
+            cell.descriptionTextView.text = team.teamDescription
+            
+            return cell
         case 1:
             if indexPath.row == 0 {
                 let cell = UITableViewCell()

@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -50,6 +51,7 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" name="cellColor"/>
             <connections>
                 <outlet property="info" destination="iEc-n0-pS8" id="FJQ-ce-nsm"/>
                 <outlet property="titleButton" destination="2qt-4G-G6Z" id="UVt-hD-G0x"/>
@@ -57,4 +59,9 @@
             <point key="canvasLocation" x="211.59420289855075" y="136.94196428571428"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <namedColor name="cellColor">
+            <color red="0.94901960784313721" green="0.95294117647058818" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -17,8 +18,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I3O-9W-uLf">
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I3O-9W-uLf">
                                 <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <color key="barTintColor" name="tabbar-color"/>
                                 <items>
                                     <navigationItem title="Task" id="TSh-hn-69A">
                                         <barButtonItem key="rightBarButtonItem" title="Done" style="done" id="sJU-d6-yn6">
@@ -31,7 +33,7 @@
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="ZdE-lP-Pru">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" name="tableBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TaskDetailInfoCell" rowHeight="151" id="gmy-cY-Jj2" customClass="TaskDetailInfoCell" customModule="Team_Task_Manager" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="49.5" width="414" height="151"/>
@@ -91,6 +93,7 @@
                                                 <constraint firstItem="ICK-dr-rjC" firstAttribute="leading" secondItem="VWE-1l-1uW" secondAttribute="leading" priority="991" constant="15" id="zHU-5S-AOG"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="cellColor"/>
                                         <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <outlet property="creationDate" destination="2Nw-7Y-WjO" id="MiW-ED-OEN"/>
@@ -123,6 +126,7 @@
                                                 <constraint firstItem="1bh-KM-Evb" firstAttribute="leading" secondItem="xl4-c4-Ndb" secondAttribute="leadingMargin" constant="15" id="SB6-WZ-YKi"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="cellColor"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TaskDetailRemoveCell" rowHeight="61" id="HJF-HS-8LC">
                                         <rect key="frame" x="0.0" y="247.5" width="414" height="61"/>
@@ -148,6 +152,7 @@
                                                 <constraint firstItem="hyv-Ac-Oph" firstAttribute="leading" secondItem="IaY-ZV-iHL" secondAttribute="leadingMargin" constant="15" id="zQP-oY-SZ4"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="cellColor"/>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AddCommentCell" rowHeight="61" id="ad8-fT-396">
@@ -186,6 +191,7 @@
                                                 <constraint firstItem="XYV-RH-ITG" firstAttribute="bottom" secondItem="SzO-W0-uLa" secondAttribute="bottomMargin" id="wgd-Vg-geG"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="cellColor"/>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TaskCommentCell" rowHeight="61" id="mwb-mV-vbV" customClass="TaskCommentCell" customModule="Team_Task_Manager" customModuleProvider="target">
@@ -227,6 +233,7 @@
                                                 <constraint firstItem="Ugh-dq-tze" firstAttribute="leading" secondItem="roa-KV-JIz" secondAttribute="leadingMargin" priority="996" id="wNP-R6-Job"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="cellColor"/>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <outlet property="commentTextView" destination="vuZ-TF-LjY" id="HBk-ae-2sD"/>
@@ -238,7 +245,7 @@
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ij1-n7-T1Y"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="tableBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="ZdE-lP-Pru" firstAttribute="leading" secondItem="ij1-n7-T1Y" secondAttribute="leading" id="0os-7g-rt7"/>
                             <constraint firstItem="ij1-n7-T1Y" firstAttribute="bottom" secondItem="ZdE-lP-Pru" secondAttribute="bottom" id="2xI-Bn-zMB"/>
@@ -268,8 +275,9 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="xm6-i2-2ix">
                                 <rect key="frame" x="0.0" y="88" width="414" height="170"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Add section title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ESe-9C-JIP">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add section title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ESe-9C-JIP">
                                         <rect key="frame" x="16" y="20" width="382" height="34"/>
+                                        <color key="backgroundColor" name="cellColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" priority="998" constant="34" id="aeL-yS-Xpm"/>
                                         </constraints>
@@ -303,15 +311,16 @@
                                 </constraints>
                                 <edgeInsets key="layoutMargins" top="20" left="16" bottom="20" right="16"/>
                             </stackView>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E71-Xn-bMz">
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E71-Xn-bMz">
                                 <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <color key="barTintColor" name="tabbar-color"/>
                                 <items>
                                     <navigationItem title="Edit Section" id="J8R-d7-nfC"/>
                                 </items>
                             </navigationBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Zea-Ri-the"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="tableBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="xm6-i2-2ix" firstAttribute="leading" secondItem="Zea-Ri-the" secondAttribute="leading" id="6BD-84-aeT"/>
                             <constraint firstItem="xm6-i2-2ix" firstAttribute="top" secondItem="E71-Xn-bMz" secondAttribute="bottom" id="DPy-vz-win"/>
@@ -337,7 +346,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="Ezn-eP-reu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="tableBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MemberCell" rowHeight="76" id="OCn-Fu-cvw" customClass="MemberCell" customModule="Team_Task_Manager" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="49.5" width="414" height="76"/>
@@ -377,6 +386,7 @@
                                         <constraint firstItem="SDN-vs-Aqv" firstAttribute="top" secondItem="fu5-La-Muy" secondAttribute="topMargin" id="kZc-3g-iAC"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" name="cellColor"/>
                                 <connections>
                                     <outlet property="emailLabel" destination="jdu-nA-t0D" id="fvR-U1-6wr"/>
                                     <outlet property="nameLabel" destination="Uxo-vE-iaw" id="nlq-zU-bBo"/>
@@ -411,7 +421,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="Qa2-ZE-KnU">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="tableBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="InviteMemberCell" rowHeight="106" id="tfB-xb-ohg" customClass="InviteMemberCell" customModule="Team_Task_Manager" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="49.5" width="414" height="106"/>
@@ -451,6 +461,7 @@
                                         <constraint firstAttribute="trailingMargin" secondItem="0rj-4Z-87X" secondAttribute="trailing" id="e23-eB-s9a"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" name="cellColor"/>
                                 <connections>
                                     <outlet property="inviteButton" destination="eci-Wh-Rjl" id="Buh-mz-I8i"/>
                                     <outlet property="textField" destination="lIu-Jc-kRR" id="b3i-32-4sd"/>
@@ -494,6 +505,7 @@
                                         <constraint firstItem="m53-c2-t9N" firstAttribute="trailing" secondItem="ENR-Ki-k5j" secondAttribute="trailingMargin" id="yrB-ZZ-HrW"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" name="cellColor"/>
                                 <connections>
                                     <outlet property="emailLabel" destination="Qxe-g9-cHi" id="fMK-Fc-C0b"/>
                                     <outlet property="nameLabel" destination="xmf-Kf-b8j" id="SPh-bT-oaA"/>
@@ -524,7 +536,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="sVM-pa-Coy">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="tableBackgroundColor"/>
                         <connections>
                             <outlet property="dataSource" destination="hJL-2G-tjq" id="QxP-93-iVJ"/>
                             <outlet property="delegate" destination="hJL-2G-tjq" id="IKK-Sn-0xH"/>
@@ -544,6 +556,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="aNz-FG-AYb">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" name="tabbar-color"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -557,11 +570,17 @@
     </scenes>
     <resources>
         <image name="Add-Button" width="20" height="20"/>
+        <namedColor name="cellColor">
+            <color red="0.94901960784313721" green="0.95294117647058818" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="tabbar-color">
+            <color red="0.92156862745098034" green="0.92941176470588238" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="tableBackgroundColor">
+            <color red="0.8901960784313725" green="0.89803921568627454" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

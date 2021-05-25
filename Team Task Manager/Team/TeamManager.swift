@@ -48,6 +48,12 @@ class TeamManager: SectionViewDelegate {
         }
     }
     
+    func updateOverview(name: String, description: String) {
+        team?.teamName = name
+        team?.teamDescription = description
+        updateTeam()
+    }
+    
     func userDidLoadTeam(userID: String) {
         if let i = team?.membersInfo.firstIndex(where: { $0.userID ==  userID}) {
             team?.membersInfo[i].joinDate = Timestamp()
