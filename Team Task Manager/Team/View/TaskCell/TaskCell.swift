@@ -18,7 +18,14 @@ class TaskCell: UITableViewCell {
         didSet {
             titleLabel.text = taskModel?.title
             detailTextView.text = taskModel?.details
-            timeLabel.text = taskModel?.creationDate.dateValue().description
+            let formatter = DateFormatter()
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .short
+            formatter.doesRelativeDateFormatting = true
+            
+            let date = taskModel?.creationDate.dateValue()
+            timeLabel.text = formatter.string(from: date!)
+            
         }
     }
     

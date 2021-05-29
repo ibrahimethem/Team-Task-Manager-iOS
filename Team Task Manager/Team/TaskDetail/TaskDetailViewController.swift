@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TaskDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TaskDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddCommentDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -26,24 +26,35 @@ class TaskDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 4
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 1:
             return 2
+        case 3:
+            return (taskModel?.comments?.count ?? 0)
         default:
             return 1
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
+        switch indexPath.section {
+        case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "TaskDetailInfoCell", for: indexPath) as! TaskDetailInfoCell
             cell.titleTextField.text = taskModel?.title
             cell.detailsTextView.text = taskModel?.details
-            cell.creationDate.text = "at \(taskModel?.creationDate.dateValue().description ?? "")"
+            
+            let formatter = DateFormatter()
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .short
+            formatter.doesRelativeDateFormatting = true
+            
+            let date = taskModel?.creationDate.dateValue()
+            
+            cell.creationDate.text = "on \(formatter.string(from: date!))"
             if let creatorName = presentingVC?.teamManager.users?.first(where: { $0.id == taskModel?.creator })?.profileName {
                 cell.creatorLabel.text = "Created by \(creatorName)"
             } else {
@@ -51,7 +62,7 @@ class TaskDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             
             return cell
-        } else if indexPath.section == 1 {
+        case 1:
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TaskDetailComplateCell", for: indexPath)
                 return cell
@@ -59,8 +70,33 @@ class TaskDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TaskDetailRemoveCell", for: indexPath)
                 return cell
             }
+        case 2:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AddCommentCell", for: indexPath) as! AddCommentCell
+            cell.delegate = self
+            return cell
+        case 3:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCommentCell", for: indexPath) as! TaskCommentCell
+            if let comment = taskModel?.comments?[indexPath.row] {
+                if let creatorName = presentingVC?.teamManager.users?.first(where: { $0.id == comment.userID })?.profileName {
+                    cell.userNameLabel.text = "by \(creatorName)"
+                } else {
+                    cell.userNameLabel.text = "by Anonymus"
+                }
+                cell.commentTextView.text = comment.comment
+                
+                let formatter = DateFormatter()
+                formatter.dateStyle = .medium
+                formatter.timeStyle = .short
+                formatter.doesRelativeDateFormatting = true
+                
+                let date = comment.date.dateValue()
+                
+                cell.userNameLabel.text = "\(cell.userNameLabel.text!) on \(formatter.string(from: date))"
+            }
+            return cell
+        default:
+            return UITableViewCell()
         }
-        return UITableViewCell()
     }
     
     @IBAction func done(_ sender: UIBarButtonItem) {
@@ -72,6 +108,13 @@ class TaskDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             vc.teamManager.updateTask(sectionIndex: sectionIndex!, taskIndex: taskIndex!, task: taskModel!)
         }
         dismiss(animated: true, completion: nil)
+    }
+    
+    func addComment(with text: String) {
+        guard let vc = presentingVC else { return }
+        if sectionIndex != nil, taskIndex != nil {
+            vc.teamManager.addComment(with: text, sectionIndex: sectionIndex!, taskIndex: taskIndex!)
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -63,6 +63,18 @@ class TeamViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     // MARK: Toolbar Functions
     
+    var didZoomOut = false
+    @IBAction func zoom(_ sender: UIBarButtonItem) {
+        if didZoomOut {
+            didZoomOut = false
+            collectionView.isPagingEnabled = true
+        } else {
+            didZoomOut = true
+            collectionView.isPagingEnabled = false
+        }
+        reloadView()
+    }
+    
     @IBAction func nextColumn(_ sender: UIBarButtonItem) {
         var indexPath = collectionView.currentIndexPath
         let numberOfItems = collectionView(collectionView, numberOfItemsInSection: TeamViewSection.tasks.rawValue)
@@ -128,7 +140,7 @@ class TeamViewController: UIViewController, UICollectionViewDelegate, UICollecti
         case TeamViewSection.overView.rawValue:
             columnNumberLabel.text = "Home"
         case TeamViewSection.tasks.rawValue:
-            let numberOfItems = collectionView(collectionView, numberOfItemsInSection: 0)
+            let numberOfItems = collectionView(collectionView, numberOfItemsInSection: TeamViewSection.tasks.rawValue)
             columnNumberLabel.text = "\(indexPath.item + 1) of \(numberOfItems)"
         case TeamViewSection.newSection.rawValue:
             columnNumberLabel.text = "New"
@@ -218,7 +230,12 @@ class TeamViewController: UIViewController, UICollectionViewDelegate, UICollecti
     // MARK: Layout
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: collectionView.frame.height)
+        if didZoomOut {
+            //let nos = 2 + self.collectionView(collectionView, numberOfItemsInSection: TeamViewSection.tasks.rawValue)
+            return CGSize(width: view.frame.width * 0.75, height: collectionView.frame.height)
+        } else {
+            return CGSize(width: view.frame.width, height: collectionView.frame.height)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

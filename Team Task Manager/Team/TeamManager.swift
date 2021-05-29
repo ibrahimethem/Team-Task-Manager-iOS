@@ -95,6 +95,28 @@ class TeamManager: SectionViewDelegate {
         }
     }
     
+    func addComment(with text: String, sectionIndex: IndexPath, taskIndex: IndexPath) {
+        guard let userID = Auth.auth().currentUser?.uid else { return }
+        if var task =  team?.sections[sectionIndex.item].tasks?[taskIndex.row] {
+            let comment = CommentModel(comment: text, userID: userID, date: Timestamp())
+            if task.comments != nil {
+                task.comments?.append(comment)
+            } else {
+                task.comments = [comment]
+            }
+            team?.sections[sectionIndex.item].tasks?[taskIndex.row] = task
+            updateTeam()
+        }
+    }
+    
+    func removeComment(sectionIndex: IndexPath, taskIndex: IndexPath, commentIndex: Int) {
+        if var task =  team?.sections[sectionIndex.item].tasks?[taskIndex.row] {
+            task.comments?.remove(at: commentIndex)
+            team?.sections[sectionIndex.item].tasks?[taskIndex.row] = task
+            updateTeam()
+        }
+    }
+    
     func kickMember(with id: String) {
         guard let userID = Auth.auth().currentUser?.uid else { return }
         if team?.adminID == userID {

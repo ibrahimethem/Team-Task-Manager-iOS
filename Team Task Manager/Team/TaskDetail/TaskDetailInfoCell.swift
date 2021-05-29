@@ -14,7 +14,6 @@ class TaskDetailInfoCell: UITableViewCell {
     @IBOutlet weak var creatorLabel: UILabel!
     @IBOutlet weak var creationDate: UILabel!
     
-
     override func awakeFromNib() {
         super.awakeFromNib()
         detailsTextView.textContainerInset = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)

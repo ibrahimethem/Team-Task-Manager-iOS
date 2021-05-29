@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,12 +28,12 @@
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hfq-Wl-dHc">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hfq-Wl-dHc">
                             <rect key="frame" x="344" y="0.0" width="40" height="818"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="CFI-oY-nG0"/>
                             </constraints>
-                            <state key="normal" title="More"/>
+                            <state key="normal" image="more"/>
                             <connections>
                                 <action selector="more:" destination="-1" eventType="touchUpInside" id="Aks-d4-Wet"/>
                             </connections>
@@ -41,7 +42,7 @@
                 </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" name="tableBackgroundColor"/>
             <constraints>
                 <constraint firstItem="aQh-W5-KYf" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="IaP-qH-FuS"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="aQh-W5-KYf" secondAttribute="bottom" id="IeG-yr-3fp"/>
@@ -51,4 +52,10 @@
             <point key="canvasLocation" x="-133" y="83"/>
         </view>
     </objects>
+    <resources>
+        <image name="more" width="23" height="5.5"/>
+        <namedColor name="tableBackgroundColor">
+            <color red="0.88999998569488525" green="0.89800000190734863" blue="0.9100000262260437" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

@@ -23,15 +23,15 @@
                         <rect key="frame" x="10" y="10" width="300" height="135"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Add team name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="c2t-ba-Q1R">
-                                <rect key="frame" x="0.0" y="0.0" width="300" height="30"/>
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="26"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="Yzm-ff-mep"/>
+                                    <constraint firstAttribute="height" constant="26" id="Yzm-ff-mep"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="hOv-7j-PKR">
-                                <rect key="frame" x="0.0" y="30" width="300" height="105"/>
+                                <rect key="frame" x="0.0" y="26" width="300" height="109"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" id="VTe-u9-WtL"/>
@@ -61,7 +61,7 @@
     </objects>
     <resources>
         <namedColor name="cellColor">
-            <color red="0.94901960784313721" green="0.95294117647058818" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94900000095367432" green="0.95300000905990601" blue="0.96100002527236938" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

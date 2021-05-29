@@ -31,6 +31,13 @@ struct TaskModel: Codable {
     var creator: String!
     var details: String!
     var title: String!
+    var comments: [CommentModel]?
+}
+
+struct CommentModel: Codable {
+    var comment: String
+    var userID: String
+    var date: Timestamp
 }
 
 struct MemberInfo: Codable {

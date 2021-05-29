@@ -20,6 +20,7 @@ class OverviewView: UICollectionViewCell, UITableViewDelegate, UITableViewDataSo
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "TeamOverviewCell", bundle: nil), forCellReuseIdentifier: "TeamOverviewCell")
+        tableView.register(UINib(nibName: "GeneralInfoCell", bundle: nil), forCellReuseIdentifier: "GeneralInfoCell")
     }
     
     func updateTeamOverview(titleText: String, descriptionText: String) {
@@ -50,12 +51,12 @@ class OverviewView: UICollectionViewCell, UITableViewDelegate, UITableViewDataSo
             return cell
         case 1:
             if indexPath.row == 0 {
-                let cell = UITableViewCell()
-                cell.textLabel?.text = "\(team.newTasks) new tasks"
+                let cell = tableView.dequeueReusableCell(withIdentifier: "GeneralInfoCell", for: indexPath) as! GeneralInfoCell
+                cell.label.text = "\(team.newTasks) new tasks"
                 return cell
             } else {
-                let cell = UITableViewCell()
-                cell.textLabel?.text = " \(team.newMessages) new messages"
+                let cell = tableView.dequeueReusableCell(withIdentifier: "GeneralInfoCell", for: indexPath) as! GeneralInfoCell
+                cell.label.text = "\(team.newMessages) new messages"
                 return cell
             }
         default:

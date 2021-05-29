@@ -24,6 +24,8 @@ class AccountViewController: UITableViewController, UserManagerDelegate, Account
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.register(UINib(nibName: "GeneralInfoCell", bundle: nil), forCellReuseIdentifier: "GeneralInfoCell")
+        
         userManager.delegate = self
         userManager.setListener()
         
@@ -58,7 +60,10 @@ class AccountViewController: UITableViewController, UserManagerDelegate, Account
                 return 0
             }
         case 1:
-            return invites?.count ?? 0
+            if invites != nil, invites!.count > 0 {
+                return invites!.count
+            }
+            return 1
         default:
             return 1
         }
@@ -73,13 +78,16 @@ class AccountViewController: UITableViewController, UserManagerDelegate, Account
             
             return cell
         case 1:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "AccountTeamCell", for: indexPath)
-            if let invite = invites?[indexPath.row] {
+            if invites?.count ?? 0 > indexPath.row, let invite = invites?[indexPath.row] {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "AccountTeamCell", for: indexPath)
                 cell.textLabel?.text = invite.teamName
                 cell.detailTextLabel?.text = invite.teamDescription
+                return cell
+            } else {
+                let infoCell = tableView.dequeueReusableCell(withIdentifier: "GeneralInfoCell", for: indexPath) as! GeneralInfoCell
+                infoCell.label.text = "You have no invites"
+                return infoCell
             }
-            
-            return cell
         default:
             return tableView.dequeueReusableCell(withIdentifier: "LogoutCell", for: indexPath)
         }
@@ -99,7 +107,11 @@ class AccountViewController: UITableViewController, UserManagerDelegate, Account
         case 0:
             performSegue(withIdentifier: "ProfileViewSegue", sender: nil)
         case 1:
-            print("\(invites?[indexPath.row].teamName ?? "no team") selected.")
+            if (invites?.count ?? 0) > indexPath.row {
+                print("\(invites?[indexPath.row].teamName ?? "no team") selected.")
+            } else {
+                print("You have no invites")
+            }
         case 2:
             let alertView = UIAlertController(title: "Logout", message: "You are logging out. Do you want to continue?", preferredStyle: .alert)
             alertView.addAction(UIAlertAction(title: "Yes, continue", style: .destructive, handler: { (alertAction) in

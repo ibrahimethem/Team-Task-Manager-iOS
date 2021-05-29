@@ -170,9 +170,7 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
             
         case sectionNumbers.otherMails.rawValue:
             if (usrMdl.otherEmails?.count ?? 0) == indexPath.row {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "addMoreCell", for: indexPath)
-                cell.textLabel?.text = "Add another email"
-                
+                let cell = tableView.dequeueReusableCell(withIdentifier: "AddNewMail", for: indexPath)
                 return cell
             }
             
@@ -189,9 +187,7 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
             
         case sectionNumbers.phoneNumbers.rawValue:
             if (usrMdl.phoneNumbers?.count ?? 0) == indexPath.row {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "addMoreCell", for: indexPath)
-                cell.textLabel?.text = "Add another phone number"
-                
+                let cell = tableView.dequeueReusableCell(withIdentifier: "AddNewPhone", for: indexPath)
                 return cell
             }
             let cell = tableView.dequeueReusableCell(withIdentifier: "otherInfoCell", for: indexPath) as! OtherInfoCell

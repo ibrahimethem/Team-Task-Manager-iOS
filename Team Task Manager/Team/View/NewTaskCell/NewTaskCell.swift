@@ -62,6 +62,7 @@ class NewTaskCell: UITableViewCell, UITextViewDelegate {
     }
     
     @IBAction func cancel(_ sender: UIButton) {
+        endEditing(true)
         delegateTable?.didCancelNewTask()
         cleanTexts()
     }
