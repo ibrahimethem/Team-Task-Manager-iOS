@@ -33,6 +33,7 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="CFI-oY-nG0"/>
                             </constraints>
+                            <color key="tintColor" name="defaultTextColor"/>
                             <state key="normal" image="more"/>
                             <connections>
                                 <action selector="more:" destination="-1" eventType="touchUpInside" id="Aks-d4-Wet"/>
@@ -53,7 +54,10 @@
         </view>
     </objects>
     <resources>
-        <image name="more" width="23" height="5.5"/>
+        <image name="more" width="20" height="5"/>
+        <namedColor name="defaultTextColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <namedColor name="tableBackgroundColor">
             <color red="0.88999998569488525" green="0.89800000190734863" blue="0.9100000262260437" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

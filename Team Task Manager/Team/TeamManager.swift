@@ -43,6 +43,9 @@ class TeamManager: SectionViewDelegate {
             
             if let team = try? documentSnapshot?.data(as: TeamModel.self) {
                 self.team = team
+                if let userID = Auth.auth().currentUser?.uid, !team.members.contains(userID) {
+                    self.delegate.userKicked()
+                }
                 self.delegate.didLoadTeam(self, team: team)
             }
         }
@@ -65,7 +68,7 @@ class TeamManager: SectionViewDelegate {
     }
     
     func getMemebers(members: [String]?) {
-        guard let memberArray = members else { return }
+        guard let memberArray = members, memberArray.count > 0 else { return }
         db.collection("userProfileInfo").whereField("userID", in: memberArray).getDocuments { querySnapshot, error in
             if let err = error {
                 print(err)
@@ -144,8 +147,14 @@ class TeamManager: SectionViewDelegate {
                     } else if (self.team?.members.contains(userID) ?? true) {
                         print("User is already a member")
                     } else {
-                        self.team?.invitedMembers?.append(userID)
-                        self.updateTeam()
+                        if self.team?.invitedMembers == nil {
+                            self.team?.invitedMembers = [userID]
+                        } else {
+                            self.team?.invitedMembers?.append(userID)
+                        }
+                        DispatchQueue.main.async {
+                            self.updateTeam()
+                        }
                     }
                 }
             } else {
@@ -279,6 +288,21 @@ class TeamManager: SectionViewDelegate {
         }
     }
     
+    func numberOfNewTasks() -> Int {
+        guard let t = team else { return 0}
+        guard let teamID = t.id else { return 0 }
+        let log = UserLogManager.shared.getUserLog(for: teamID)
+        let time = log.teamLastSeen ?? Timestamp()
+        
+        var tasks = [TaskModel]()
+        for section in t.sections {
+            if let filteredTasks = section.tasks?.filter({ $0.creationDate.dateValue() > time.dateValue()}) {
+                tasks.append(contentsOf: filteredTasks)
+            }
+        }
+        return tasks.count
+        
+    }
     
 }
 
@@ -286,6 +310,7 @@ protocol TeamManagerDelegate {
     var teamID: String? { get set }
     func didLoadTeam(_ teamManager: TeamManager, team: TeamModel)
     func didLoadMembers(_ teamManager: TeamManager, members: [UserModel])
+    func userKicked()
 }
 
 protocol InvitedMembersDelegate {

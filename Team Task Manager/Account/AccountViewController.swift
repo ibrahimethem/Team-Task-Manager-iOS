@@ -48,7 +48,7 @@ class AccountViewController: UITableViewController, UserManagerDelegate, Account
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -64,6 +64,8 @@ class AccountViewController: UITableViewController, UserManagerDelegate, Account
                 return invites!.count
             }
             return 1
+        case 2:
+            return 3
         default:
             return 1
         }
@@ -87,6 +89,15 @@ class AccountViewController: UITableViewController, UserManagerDelegate, Account
                 let infoCell = tableView.dequeueReusableCell(withIdentifier: "GeneralInfoCell", for: indexPath) as! GeneralInfoCell
                 infoCell.label.text = "You have no invites"
                 return infoCell
+            }
+        case 2:
+            switch indexPath.row {
+            case 0:
+                return tableView.dequeueReusableCell(withIdentifier: "SettingsCell", for: indexPath)
+            case 1:
+                return tableView.dequeueReusableCell(withIdentifier: "TermsCell", for: indexPath)
+            default:
+                return tableView.dequeueReusableCell(withIdentifier: "AboutCell", for: indexPath)
             }
         default:
             return tableView.dequeueReusableCell(withIdentifier: "LogoutCell", for: indexPath)

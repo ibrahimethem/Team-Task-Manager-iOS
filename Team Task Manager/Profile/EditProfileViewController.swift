@@ -231,18 +231,16 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView.cellForRow(at: indexPath)?.reuseIdentifier == "addMoreCell" {
-            if indexPath.section == sectionNumbers.otherMails.rawValue {
-                userManager?.addNewMail(mail: MailModel())
-                tableView.beginUpdates()
-                tableView.insertRows(at: [indexPath], with: .automatic)
-                tableView.endUpdates()
-            } else if indexPath.section == sectionNumbers.phoneNumbers.rawValue {
-                userManager?.addNewPhoneNumber(phoneNumber: PhoneNumberModel())
-                tableView.beginUpdates()
-                tableView.insertRows(at: [indexPath], with: .automatic)
-                tableView.endUpdates()
-            }
+        if tableView.cellForRow(at: indexPath)?.reuseIdentifier == "AddNewMail" {
+            userManager?.addNewMail(mail: MailModel())
+            tableView.beginUpdates()
+            tableView.insertRows(at: [indexPath], with: .automatic)
+            tableView.endUpdates()
+        } else if tableView.cellForRow(at: indexPath)?.reuseIdentifier == "AddNewPhone" {
+            userManager?.addNewPhoneNumber(phoneNumber: PhoneNumberModel())
+            tableView.beginUpdates()
+            tableView.insertRows(at: [indexPath], with: .automatic)
+            tableView.endUpdates()
         }
     }
     

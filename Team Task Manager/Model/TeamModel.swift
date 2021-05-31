@@ -11,7 +11,7 @@ import FirebaseFirestoreSwift
 
 struct TeamModel: Identifiable, Codable {
     @DocumentID var id: String?
-    var teamID: String?
+    //var teamID: String?
     var teamName: String
     var teamDescription: String
     var adminID: String

@@ -231,7 +231,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" name="tabbar-color"/>
-                        <color key="selectedImageTintColor" name="tabbarSelectedItemColor"/>
+                        <color key="selectedImageTintColor" name="defaultTextColor"/>
                     </tabBar>
                     <connections>
                         <segue destination="jQ3-48-Xae" kind="relationship" relationship="viewControllers" id="kXt-xQ-Vxn"/>
@@ -308,6 +308,7 @@
                                 <items>
                                     <navigationItem title="Edit Profile" id="6SP-If-onj">
                                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="IzV-cc-WlE">
+                                            <color key="tintColor" name="customRedColor"/>
                                             <connections>
                                                 <action selector="cancel:" destination="zHZ-fK-frR" id="bRh-LK-fIG"/>
                                             </connections>
@@ -356,7 +357,11 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H4L-Wr-4gt">
                                 <rect key="frame" x="0.0" y="813" width="414" height="49"/>
                                 <items>
-                                    <barButtonItem image="info-list" id="mwB-vZ-iBW"/>
+                                    <barButtonItem image="info-list" id="mwB-vZ-iBW">
+                                        <connections>
+                                            <action selector="goToOverview:" destination="Vmi-dj-svM" id="CzU-Wi-wp0"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="JGR-K7-xEg"/>
                                     <barButtonItem image="Back-Button" id="Z4q-1V-b7K">
                                         <connections>
@@ -396,6 +401,7 @@
                                         </connections>
                                     </barButtonItem>
                                 </items>
+                                <color key="tintColor" systemColor="labelColor"/>
                                 <color key="barTintColor" name="tabbar-color"/>
                             </toolbar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Wxa-II-aJ3">
@@ -430,10 +436,15 @@
                                     <action selector="showMembers:" destination="Vmi-dj-svM" id="xy1-st-MGQ"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem enabled="NO" title="Chat" image="chat" id="9Hu-jL-Jud"/>
+                            <barButtonItem enabled="NO" title="Chat" image="chat" id="9Hu-jL-Jud">
+                                <connections>
+                                    <action selector="showChat:" destination="Vmi-dj-svM" id="aMz-AZ-FZ7"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="chatButton" destination="9Hu-jL-Jud" id="BDh-g8-DzC"/>
                         <outlet property="collectionView" destination="Wxa-II-aJ3" id="gIl-pm-nTY"/>
                         <outlet property="columnNumberLabel" destination="1bJ-xd-rns" id="qOd-aM-XRz"/>
                         <outlet property="membersButton" destination="wrl-lo-Xhe" id="d7l-5m-Rl7"/>
@@ -466,7 +477,7 @@
             </objects>
             <point key="canvasLocation" x="1622" y="102"/>
         </scene>
-        <!--Home-->
+        <!--Teams-->
         <scene sceneID="9bK-jq-fnD">
             <objects>
                 <tableViewController extendedLayoutIncludesOpaqueBars="YES" id="CN6-HA-OmI" customClass="HomeViewController" customModule="Team_Task_Manager" customModuleProvider="target" sceneMemberID="viewController">
@@ -528,16 +539,141 @@
                         </connections>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationItem key="navigationItem" title="Home" id="IV2-I4-bh2">
-                        <barButtonItem key="rightBarButtonItem" image="Add-Button" id="tMt-XI-zIn"/>
+                    <navigationItem key="navigationItem" title="Teams" id="IV2-I4-bh2">
+                        <barButtonItem key="rightBarButtonItem" image="Add-Button" id="tMt-XI-zIn">
+                            <connections>
+                                <action selector="addTeam:" destination="CN6-HA-OmI" id="whB-7L-H1f"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <segue destination="Vmi-dj-svM" kind="show" identifier="TeamViewSegue" id="h9c-be-eam"/>
+                        <segue destination="BgC-DJ-f10" kind="presentation" identifier="AddTeamSegue" id="95h-0L-yv6"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o9i-Dh-Tqg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2519" y="102"/>
+        </scene>
+        <!--Add Team View Controller-->
+        <scene sceneID="FyG-Vr-R8r">
+            <objects>
+                <viewController id="BgC-DJ-f10" customClass="AddTeamViewController" customModule="Team_Task_Manager" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="tSg-hM-nxj">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qay-zb-A0r">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                                <color key="barTintColor" name="tabbar-color"/>
+                                <items>
+                                    <navigationItem title="Add New Team" id="epS-3W-Enh">
+                                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="lzJ-7J-YIA">
+                                            <color key="tintColor" name="customRedColor"/>
+                                            <connections>
+                                                <action selector="cancel:" destination="BgC-DJ-f10" id="bkC-Nm-eQZ"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Done" style="done" id="WqQ-QB-BzP">
+                                            <connections>
+                                                <action selector="done:" destination="BgC-DJ-f10" id="7Pw-Oi-vN5"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vNh-D3-REc">
+                                <rect key="frame" x="0.0" y="56" width="414" height="752"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="b2f-ue-2xW">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="256"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="eYh-Mk-a39">
+                                                <rect key="frame" x="16" y="20" width="382" height="69"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Team name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lwJ-1O-GRh">
+                                                        <rect key="frame" x="0.0" y="0.0" width="382" height="17"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                                        <color key="textColor" name="tabbarItemColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Add team name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fPm-sv-WBn" customClass="MyTextField" customModule="Team_Task_Manager" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="25" width="382" height="44"/>
+                                                        <color key="backgroundColor" name="cellColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="44" id="atD-B5-Her"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="insetX">
+                                                                <real key="value" value="8"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="insetY">
+                                                                <real key="value" value="8"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </textField>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="cnO-qf-gLm">
+                                                <rect key="frame" x="16" y="111" width="382" height="125"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Desciption" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MFx-kd-5nZ">
+                                                        <rect key="frame" x="0.0" y="0.0" width="382" height="17"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                                        <color key="textColor" name="tabbarItemColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="7Zh-25-f0J">
+                                                        <rect key="frame" x="0.0" y="25" width="382" height="100"/>
+                                                        <color key="backgroundColor" name="cellColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="Cov-jF-JFK"/>
+                                                        </constraints>
+                                                        <color key="textColor" systemColor="labelColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    </textView>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <edgeInsets key="layoutMargins" top="20" left="16" bottom="20" right="16"/>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" name="tableBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="b2f-ue-2xW" firstAttribute="top" secondItem="aFv-48-f3v" secondAttribute="top" id="167-rm-P56"/>
+                                    <constraint firstItem="b2f-ue-2xW" firstAttribute="centerX" secondItem="aup-Rh-Hir" secondAttribute="centerX" id="WMZ-bz-xvd"/>
+                                    <constraint firstItem="b2f-ue-2xW" firstAttribute="leading" secondItem="aFv-48-f3v" secondAttribute="leading" id="XjH-p4-BZs"/>
+                                    <constraint firstItem="b2f-ue-2xW" firstAttribute="width" secondItem="vNh-D3-REc" secondAttribute="width" id="fGh-8O-WPe"/>
+                                    <constraint firstItem="b2f-ue-2xW" firstAttribute="bottom" secondItem="aFv-48-f3v" secondAttribute="bottom" id="rg6-1F-Aq2"/>
+                                    <constraint firstItem="b2f-ue-2xW" firstAttribute="trailing" secondItem="aFv-48-f3v" secondAttribute="trailing" id="u7S-gz-jaC"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="aFv-48-f3v"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="aup-Rh-Hir"/>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="g5U-P2-Lwe"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="vNh-D3-REc" firstAttribute="top" secondItem="Qay-zb-A0r" secondAttribute="bottom" id="7Gr-1v-IIR"/>
+                            <constraint firstItem="Qay-zb-A0r" firstAttribute="top" secondItem="g5U-P2-Lwe" secondAttribute="top" id="H7J-MG-7qB"/>
+                            <constraint firstItem="vNh-D3-REc" firstAttribute="leading" secondItem="g5U-P2-Lwe" secondAttribute="leading" id="HdY-BV-Bes"/>
+                            <constraint firstItem="Qay-zb-A0r" firstAttribute="trailing" secondItem="g5U-P2-Lwe" secondAttribute="trailing" id="Qv1-24-gA2"/>
+                            <constraint firstItem="vNh-D3-REc" firstAttribute="bottom" secondItem="g5U-P2-Lwe" secondAttribute="bottom" id="bRt-mm-MkD"/>
+                            <constraint firstItem="Qay-zb-A0r" firstAttribute="leading" secondItem="g5U-P2-Lwe" secondAttribute="leading" id="gIv-Ra-nXQ"/>
+                            <constraint firstItem="vNh-D3-REc" firstAttribute="trailing" secondItem="g5U-P2-Lwe" secondAttribute="trailing" id="oGc-qj-Tf6"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="descriptionTextView" destination="7Zh-25-f0J" id="lTh-Ex-6n6"/>
+                        <outlet property="titleTextField" destination="fPm-sv-WBn" id="mMb-li-f3A"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J5M-Y8-oTL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2518.840579710145" y="811.60714285714278"/>
         </scene>
         <!--Account-->
         <scene sceneID="hSG-bY-3cu">
@@ -548,6 +684,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" largeTitles="YES" id="W93-8y-O61">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" systemColor="labelColor"/>
                         <color key="barTintColor" name="tabbar-color"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -560,6 +697,11 @@
             <point key="canvasLocation" x="1622" y="-607"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="fPm-sv-WBn">
+            <size key="intrinsicContentSize" width="130" height="37"/>
+        </designable>
+    </designables>
     <resources>
         <image name="Add-Button" width="22" height="22"/>
         <image name="Back-Button" width="12.5" height="23"/>
@@ -582,11 +724,17 @@
         <namedColor name="cellColor">
             <color red="0.94900000095367432" green="0.95300000905990601" blue="0.96100002527236938" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="customRedColor">
+            <color red="0.92900002002716064" green="0.25900000333786011" blue="0.27099999785423279" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="defaultTextColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <namedColor name="tabbar-color">
             <color red="0.92199999094009399" green="0.92900002002716064" blue="0.93699997663497925" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="tabbarSelectedItemColor">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="tabbarItemColor">
+            <color red="0.33700001239776611" green="0.3529999852180481" blue="0.37599998712539673" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="tableBackgroundColor">
             <color red="0.88999998569488525" green="0.89800000190734863" blue="0.9100000262260437" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

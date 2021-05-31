@@ -28,15 +28,11 @@ class OverviewView: UICollectionViewCell, UITableViewDelegate, UITableViewDataSo
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 1
-        } else {
-            return 2
-        }
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -45,20 +41,11 @@ class OverviewView: UICollectionViewCell, UITableViewDelegate, UITableViewDataSo
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "TeamOverviewCell") as! TeamOverviewCell
             
-            cell.titleTextfield.text = team.teamName
+            cell.titleTextField.text = team.teamName
             cell.descriptionTextView.text = team.teamDescription
+            cell.delegate = self
             
             return cell
-        case 1:
-            if indexPath.row == 0 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "GeneralInfoCell", for: indexPath) as! GeneralInfoCell
-                cell.label.text = "\(team.newTasks) new tasks"
-                return cell
-            } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "GeneralInfoCell", for: indexPath) as! GeneralInfoCell
-                cell.label.text = "\(team.newMessages) new messages"
-                return cell
-            }
         default:
             return UITableViewCell()
         }

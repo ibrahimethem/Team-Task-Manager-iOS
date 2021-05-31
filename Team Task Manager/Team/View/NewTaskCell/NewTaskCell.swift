@@ -16,6 +16,7 @@ class NewTaskCell: UITableViewCell, UITextViewDelegate {
     @IBOutlet weak var cancelButton: UIButton!
     
     var delegateTable: NewTaskCellDelegate?
+    var textColor = UIColor(named: "defaultTextColor")!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -39,7 +40,7 @@ class NewTaskCell: UITableViewCell, UITextViewDelegate {
         if textView.textColor == .gray {
             textView.text = ""
             textView.font = UIFont.systemFont(ofSize: 14, weight: .light)
-            textView.textColor = .black
+            textView.textColor = textColor
         }
     }
     
@@ -54,7 +55,7 @@ class NewTaskCell: UITableViewCell, UITextViewDelegate {
     
     @IBAction func add(_ sender: UIButton) {
         var details = ""
-        if detailsTextView.textColor == .black {
+        if detailsTextView.textColor == textColor {
             details = detailsTextView.text
         }
         delegateTable?.didAddNewTask(title: titleTextField.text ?? "", details: details)

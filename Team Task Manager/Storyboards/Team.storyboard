@@ -274,8 +274,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="xm6-i2-2ix">
-                                <rect key="frame" x="0.0" y="88" width="414" height="170"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="xm6-i2-2ix">
+                                <rect key="frame" x="0.0" y="88" width="414" height="186"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add section title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ESe-9C-JIP">
                                         <rect key="frame" x="16" y="20" width="382" height="34"/>
@@ -287,22 +287,36 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nLJ-Bf-QVA">
-                                        <rect key="frame" x="16" y="66" width="382" height="36"/>
+                                        <rect key="frame" x="16" y="74" width="382" height="36"/>
+                                        <color key="backgroundColor" name="AccentColor"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
-                                        <state key="normal" title="Done"/>
+                                        <state key="normal" title="Done">
+                                            <color key="titleColor" name="defaultTextColor"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="done:" destination="l0c-Kb-eZl" eventType="touchUpInside" id="TOD-Ui-91o"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4i7-sI-Dvg">
-                                        <rect key="frame" x="16" y="114" width="382" height="36"/>
+                                        <rect key="frame" x="16" y="130" width="382" height="36"/>
+                                        <color key="backgroundColor" name="customRedColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" priority="997" constant="36" id="Oqi-7B-lic"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                         <state key="normal" title="Remove">
-                                            <color key="titleColor" systemColor="systemRedColor"/>
+                                            <color key="titleColor" name="defaultTextColor"/>
                                         </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="remove:" destination="l0c-Kb-eZl" eventType="touchUpInside" id="gjU-cd-qoU"/>
                                         </connections>
@@ -416,6 +430,132 @@
             </objects>
             <point key="canvasLocation" x="4225" y="1551"/>
         </scene>
+        <!--Chat View Controller-->
+        <scene sceneID="CQa-ph-um4">
+            <objects>
+                <viewController storyboardIdentifier="ChatViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vhP-9t-VV8" customClass="ChatViewController" customModule="Team_Task_Manager" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9Mg-tZ-HFN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="csW-b3-dEF">
+                                <rect key="frame" x="0.0" y="44" width="414" height="768"/>
+                                <color key="backgroundColor" name="tableBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ChatCell" rowHeight="100" id="bIh-p4-LvE" customClass="ChatCell" customModule="Team_Task_Manager" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="100"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bIh-p4-LvE" id="J37-1T-uRD">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="fhV-dA-BOo">
+                                                    <rect key="frame" x="20" y="11" width="304" height="78"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v07-fI-6B9">
+                                                            <rect key="frame" x="8" y="8" width="288" height="18"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="18" id="wN2-uf-37W"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NmF-T1-E8g">
+                                                            <rect key="frame" x="8" y="26" width="288" height="26"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="0os-Py-a3g"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HKP-GU-02l">
+                                                            <rect key="frame" x="8" y="52" width="288" height="18"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="18" id="nUH-V6-Hn3"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="italicSystem" pointSize="13"/>
+                                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" name="cellColor"/>
+                                                    <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="8"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="fhV-dA-BOo" firstAttribute="bottom" secondItem="J37-1T-uRD" secondAttribute="bottomMargin" id="2gr-2u-tkp"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="fhV-dA-BOo" secondAttribute="trailing" constant="70" id="STg-Bu-aQ5"/>
+                                                <constraint firstItem="fhV-dA-BOo" firstAttribute="top" secondItem="J37-1T-uRD" secondAttribute="topMargin" id="gCI-Qa-mbY"/>
+                                                <constraint firstItem="fhV-dA-BOo" firstAttribute="leading" secondItem="J37-1T-uRD" secondAttribute="leadingMargin" id="lXj-gM-Tke"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="dateLabel" destination="HKP-GU-02l" id="bOk-R5-h18"/>
+                                            <outlet property="leftConstraint" destination="lXj-gM-Tke" id="EEs-gG-2Vr"/>
+                                            <outlet property="messageLabel" destination="NmF-T1-E8g" id="Jiu-sQ-7DH"/>
+                                            <outlet property="rightConstraint" destination="STg-Bu-aQ5" id="ZPg-4e-wkq"/>
+                                            <outlet property="userNameLabel" destination="v07-fI-6B9" id="AkK-II-Qhu"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hgv-8D-eq2">
+                                <rect key="frame" x="0.0" y="812" width="414" height="50"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your message" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8Dm-wd-dQ3">
+                                        <rect key="frame" x="16" y="8" width="322" height="34"/>
+                                        <color key="backgroundColor" name="cellColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cQ7-bn-kkY">
+                                        <rect key="frame" x="338" y="8" width="60" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="Maz-W3-JyY"/>
+                                        </constraints>
+                                        <state key="normal" title="Send">
+                                            <color key="titleColor" name="AccentColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="send:" destination="vhP-9t-VV8" eventType="touchUpInside" id="Y8S-DB-ihp"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="ziY-Wi-Le4"/>
+                                </constraints>
+                                <edgeInsets key="layoutMargins" top="8" left="16" bottom="8" right="16"/>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="o3T-Hc-HMH"/>
+                        <color key="backgroundColor" name="tabbar-color"/>
+                        <constraints>
+                            <constraint firstItem="o3T-Hc-HMH" firstAttribute="trailing" secondItem="csW-b3-dEF" secondAttribute="trailing" id="36B-w7-tta"/>
+                            <constraint firstItem="csW-b3-dEF" firstAttribute="leading" secondItem="o3T-Hc-HMH" secondAttribute="leading" id="7Z5-CI-8i8"/>
+                            <constraint firstItem="csW-b3-dEF" firstAttribute="top" secondItem="o3T-Hc-HMH" secondAttribute="top" id="9Xo-lW-4c6"/>
+                            <constraint firstItem="o3T-Hc-HMH" firstAttribute="trailing" secondItem="Hgv-8D-eq2" secondAttribute="trailing" id="EFg-Ra-GYl"/>
+                            <constraint firstItem="Hgv-8D-eq2" firstAttribute="top" secondItem="csW-b3-dEF" secondAttribute="bottom" id="Kx0-C6-UIT"/>
+                            <constraint firstItem="Hgv-8D-eq2" firstAttribute="leading" secondItem="o3T-Hc-HMH" secondAttribute="leading" id="SHa-wg-eOj"/>
+                            <constraint firstItem="Hgv-8D-eq2" firstAttribute="bottom" secondItem="o3T-Hc-HMH" secondAttribute="bottom" id="gLo-Xb-gPk"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="messageField" destination="8Dm-wd-dQ3" id="9Hp-SU-rAd"/>
+                        <outlet property="tableView" destination="csW-b3-dEF" id="NZk-XF-I5Z"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aar-CT-xBK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4240.579710144928" y="2268.75"/>
+        </scene>
         <!--Invite-->
         <scene sceneID="XrW-eh-odz">
             <objects>
@@ -446,10 +586,19 @@
                                                 </textField>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eci-Wh-Rjl">
                                                     <rect key="frame" x="0.0" y="42" width="374" height="42"/>
+                                                    <color key="backgroundColor" name="AccentColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" priority="998" constant="34" id="jy0-KY-CXN"/>
                                                     </constraints>
-                                                    <state key="normal" title="Invite User"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal" title="Invite User">
+                                                        <color key="titleColor" name="defaultTextColor"/>
+                                                    </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="8"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                     <connections>
                                                         <action selector="invite:" destination="tfB-xb-ohg" eventType="touchUpInside" id="1Ss-Uk-vXb"/>
                                                     </connections>
@@ -559,6 +708,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="aNz-FG-AYb">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" name="defaultTextColor"/>
                         <color key="barTintColor" name="tabbar-color"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -575,8 +725,17 @@
         <image name="add-member" width="24.5" height="22"/>
         <image name="comment" width="21" height="20"/>
         <image name="refresh" width="24" height="24"/>
+        <namedColor name="AccentColor">
+            <color red="0.45098039215686275" green="0.53725490196078429" blue="0.85490196078431369" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="cellColor">
             <color red="0.94900000095367432" green="0.95300000905990601" blue="0.96100002527236938" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="customRedColor">
+            <color red="0.92900002002716064" green="0.25900000333786011" blue="0.27099999785423279" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="defaultTextColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="tabbar-color">
             <color red="0.92199999094009399" green="0.92900002002716064" blue="0.93699997663497925" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

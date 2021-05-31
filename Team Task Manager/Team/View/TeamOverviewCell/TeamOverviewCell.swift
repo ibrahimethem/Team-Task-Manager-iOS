@@ -9,7 +9,7 @@ import UIKit
 
 class TeamOverviewCell: UITableViewCell, UITextViewDelegate, UITextFieldDelegate {
     
-    @IBOutlet weak var titleTextfield: UITextField!
+    @IBOutlet weak var titleTextField: MyTextField!
     @IBOutlet weak var descriptionTextView: UITextView!
     
     var delegate: TeamOverviewCellDelegate?
@@ -20,10 +20,41 @@ class TeamOverviewCell: UITableViewCell, UITextViewDelegate, UITextFieldDelegate
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        titleTextfield.delegate = self
+        titleTextField.delegate = self
         descriptionTextView.delegate = self
-        descriptionTextView.textContainer.lineFragmentPadding = 0.0
-        descriptionTextView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        setup()
+    }
+    
+    private func setup() {
+        let color = UIColor(named: "tabbar-color")!.cgColor
+        
+        titleTextField.layer.cornerRadius = 8.0
+        titleTextField.layer.borderWidth = 1.0
+        titleTextField.layer.borderColor = color
+        
+        descriptionTextView.layer.cornerRadius = 8.0
+        descriptionTextView.layer.borderWidth = 1.0
+        descriptionTextView.layer.borderColor = color
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        textViewInitialText = textView.text
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text != nil, textView.text != textViewInitialText {
+            delegate?.updateTeamOverview(titleText: titleTextField.text!, descriptionText: textView.text!)
+        }
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textFieldInitialText = textField.text
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField.text != nil, textField.text != textFieldInitialText {
+            delegate?.updateTeamOverview(titleText: textField.text!, descriptionText: descriptionTextView.text!)
+        }
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

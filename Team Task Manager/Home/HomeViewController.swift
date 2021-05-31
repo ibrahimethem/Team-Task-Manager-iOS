@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 struct HomeViewModel {
     var teams: [TeamModel]?
@@ -15,21 +16,27 @@ struct HomeViewModel {
 
 class HomeViewController: UITableViewController, HomeManagerDelegate {
 
-    lazy var teamManager = HomeManager()
+    lazy var homeManager = HomeManager()
     lazy var viewModel = HomeViewModel()
     
     //@IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        teamManager.delegate = self
-        teamManager.addSnapshotListener()
+        homeManager.delegate = self
+        homeManager.addSnapshotListener()
         
         tableView.delegate = self
         tableView.dataSource = self
         
         navigationController?.navigationBar.prefersLargeTitles = true
 
+    }
+    
+    @IBAction func addTeam(_ sender: UIButton) {
+        performSegue(withIdentifier: "AddTeamSegue", sender: homeManager)
+//        guard let userID = Auth.auth().currentUser?.uid else { return }
+//        homeManager.addTeam(teamModel: TeamModel(id: nil, teamName: "New Team", teamDescription: "My awesom new team", adminID: userID, members: [userID], invitedMembers: [], membersInfo: [MemberInfo(userID: userID, joinDate: Timestamp())], sections: []))
     }
     
     func didLoadTeams(_ teamManager: HomeManager, teams: [TeamModel]) {
@@ -104,6 +111,8 @@ class HomeViewController: UITableViewController, HomeManagerDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let id = sender as? String, let vc = segue.destination as? TeamViewController {
             vc.teamID = id
+        } else if let hm = sender as? HomeManager, let vc = segue.destination as? AddTeamViewController {
+            vc.homeManager = hm
         }
     }
 

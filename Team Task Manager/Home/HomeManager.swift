@@ -70,6 +70,17 @@ class HomeManager {
         }
     }
     
+    func addTeam(teamModel: TeamModel) {
+        do {
+            let docRef = try db.collection("TeamsTasks").addDocument(from: teamModel)
+            print("You added team with id: \(docRef.documentID)")
+            let chatRef = try db.collection("Chats").addDocument(from: MessageModel(id: nil, teamID: docRef.documentID, date: Timestamp(), message: "Team is created"))
+            print("You added team chat with id: \(chatRef.documentID)")
+        } catch {
+            print("You could not add the team")
+        }
+    }
+    
 }
 
 protocol HomeManagerDelegate {

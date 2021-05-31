@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SideMenu
 import FirebaseAuth
 
 enum TeamViewSection: Int {
@@ -15,14 +14,16 @@ enum TeamViewSection: Int {
     case newSection = 2
 }
 
-class TeamViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, TeamManagerDelegate {
+class TeamViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, TeamManagerDelegate, ChatManagerDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var columnNumberLabel: UILabel!
     @IBOutlet weak var membersButton: UIBarButtonItem!
+    @IBOutlet weak var chatButton: UIBarButtonItem!
     
     var teamID: String?
     lazy var teamManager = TeamManager(delegate: self)
+    var chatManager: ChatManager?
     
     var teamModel: TeamModel?
     
@@ -60,6 +61,16 @@ class TeamViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
         present(vc, animated: true, completion: nil)
     }
+    
+    @IBAction func showChat(_ sender: UIBarButtonItem) {
+        let vc = UIStoryboard(name: "Team", bundle: nil).instantiateViewController(withIdentifier: "ChatViewController") as! ChatViewController
+        vc.chatManager = chatManager
+        vc.members = teamManager.users
+        vc.navigationItem.rightBarButtonItem = membersButton
+        vc.navigationItem.title = "Chat"
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     
     // MARK: Toolbar Functions
     
@@ -127,6 +138,9 @@ class TeamViewController: UIViewController, UICollectionViewDelegate, UICollecti
         collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
     }
     
+    @IBAction func goToOverview(_ sender: UIBarButtonItem) {
+        collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+    }
     
     func reloadView() {
         collectionView.reloadData()
@@ -171,9 +185,29 @@ class TeamViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
+    
+    // MARK: Chat Manager Delegate
+    
+    
+    func didLoadMessages(_ chatManager: ChatManager, messages: [MessageModel]) {
+        chatButton.isEnabled = true
+    }
+    
+    
     // MARK: Team Manager Delegate
     
+    func userKicked() {
+        presentedViewController?.dismiss(animated: true, completion: nil)
+        navigationController?.popToRootViewController(animated: false)
+    }
+    
     func didLoadTeam(_ teamManager: TeamManager, team: TeamModel) {
+        if chatManager == nil {
+            chatManager = ChatManager()
+            chatManager?.delegate = self
+            chatManager?.teamID = team.id
+            chatManager?.addSnapshotListener()
+        }
         teamModel = team
         reloadView()
         reloadTaskDetailIfNeeded()
@@ -244,6 +278,16 @@ class TeamViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+    
+    
+    // MARK: Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let dest = segue.destination as? ChatViewController, let members = teamManager.users {
+            dest.members = members
+            dest.chatManager = chatManager
+        }
     }
 
 }
