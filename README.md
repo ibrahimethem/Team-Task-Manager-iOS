@@ -1,4 +1,4 @@
-# Team Task-Manager iOS (Work in Process)
+# Team Task-Manager iOS (Work in Progress)
 
 Team Task Manager is an IOS application for task management and group chatting. You can create your team and invite others to the team to communicate and manage and complete the tasks together.
 
