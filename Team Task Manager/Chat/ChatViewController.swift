@@ -60,6 +60,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         if let message = chatManager?.messages?[indexPath.row] {
             if message.userID == userID {
                 cell.isOwnMessage = true
+            } else {
+                let infoCell = tableView.dequeueReusableCell(withIdentifier: "InfoCell", for: indexPath) as! ChatInfoCell
+                infoCell.infoLabel.text = message.message
+                infoCell.transform = CGAffineTransform(rotationAngle: .pi)
+                return infoCell
             }
             if let user = members?.first(where: { $0.id == message.userID }) {
                 cell.userNameLabel.text = user.profileName

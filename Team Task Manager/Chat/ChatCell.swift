@@ -21,6 +21,9 @@ class ChatCell: UITableViewCell {
             if isOwnMessage != nil ,isOwnMessage! {
                 rightConstraint.constant = 0.0
                 leftConstraint.constant = 70.0
+            } else {
+                rightConstraint.constant = 70.0
+                leftConstraint.constant = 0.0
             }
         }
     }
