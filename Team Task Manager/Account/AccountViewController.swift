@@ -119,11 +119,21 @@ class AccountViewController: UITableViewController, UserManagerDelegate, Account
             performSegue(withIdentifier: "ProfileViewSegue", sender: nil)
         case 1:
             if (invites?.count ?? 0) > indexPath.row {
-                print("\(invites?[indexPath.row].teamName ?? "no team") selected.")
+                let alertView = UIAlertController(title: "Team Invite", message: "You are invited to \(invites![indexPath.row].teamName)", preferredStyle: .alert)
+                alertView.addAction(UIAlertAction(title: "Accept", style: .default, handler: { _ in
+                    if let docID = self.invites?[indexPath.row].id {
+                        self.accountManager.acceptInvite(docID: docID)
+                    }
+                }))
+                alertView.addAction(UIAlertAction(title: "Decline", style: .cancel, handler: { _ in
+                    if let docID = self.invites?[indexPath.row].id {
+                        self.accountManager.declineInvite(docID: docID)
+                    }
+                }))
             } else {
                 print("You have no invites")
             }
-        case 2:
+        case 3:
             let alertView = UIAlertController(title: "Logout", message: "You are logging out. Do you want to continue?", preferredStyle: .alert)
             alertView.addAction(UIAlertAction(title: "Yes, continue", style: .destructive, handler: { (alertAction) in
                 try? Auth.auth().signOut()
