@@ -501,7 +501,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="22" id="hdS-l1-bl5"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>

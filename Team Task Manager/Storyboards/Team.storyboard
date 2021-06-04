@@ -505,6 +505,36 @@
                                             <outlet property="userNameLabel" destination="v07-fI-6B9" id="AkK-II-Qhu"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="InfoCell" rowHeight="60" id="Yq0-Su-xKc" customClass="ChatInfoCell" customModule="Team_Task_Manager" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="124.5" width="414" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yq0-Su-xKc" id="1q3-zZ-ax6">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DmG-F9-tW7">
+                                                    <rect key="frame" x="100" y="11" width="214" height="38"/>
+                                                    <color key="backgroundColor" name="cellColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="26" id="kMH-4L-7Jq"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="DmG-F9-tW7" secondAttribute="trailing" constant="80" id="OGd-9x-0rO"/>
+                                                <constraint firstItem="DmG-F9-tW7" firstAttribute="top" secondItem="1q3-zZ-ax6" secondAttribute="topMargin" id="WUB-CA-wGe"/>
+                                                <constraint firstItem="DmG-F9-tW7" firstAttribute="leading" secondItem="1q3-zZ-ax6" secondAttribute="leadingMargin" constant="80" id="voc-Jc-5nH"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="DmG-F9-tW7" secondAttribute="bottom" id="x9G-p3-lBn"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="infoLabel" destination="DmG-F9-tW7" id="6ph-72-y5E"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hgv-8D-eq2">
@@ -726,7 +756,7 @@
         <image name="comment" width="21" height="20"/>
         <image name="refresh" width="24" height="24"/>
         <namedColor name="AccentColor">
-            <color red="0.45098039215686275" green="0.53725490196078429" blue="0.85490196078431369" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.45100000500679016" green="0.53700000047683716" blue="0.85500001907348633" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="cellColor">
             <color red="0.94900000095367432" green="0.95300000905990601" blue="0.96100002527236938" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
